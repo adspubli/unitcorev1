@@ -8,8 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import ExplorePage from './pages/ExplorePage';
 import CreateGroupPage from './pages/CreateGroupPage';
 import GroupDetailsPage from './pages/GroupDetailsPage';
-// Este es un cambio de prueba
-import UpdatePasswordPage from './pages/UpdatePasswordPage';
+import UpdatePasswordPage from './pages/UpdatePasswordPage'; // Forzar actualizacion
 import { createClient } from '@supabase/supabase-js';
 
 // --- CONFIGURACIÓN DE SUPABASE ---
