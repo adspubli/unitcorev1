@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
+import { 
   Search,
   Grid3X3,
   MessageCircle,
   Plus,
   ChevronLeft,
-  ChevronRight,
-  Award, // Para "Índice de confianza"
-  Clock // Para "Tiempo de respuesta"
+  ChevronRight
 } from 'lucide-react';
 
 const ExplorePage = () => {
@@ -21,7 +19,7 @@ const ExplorePage = () => {
   };
 
   const categories = [
-    'Todos', 'SVOD', 'Música', 'Seguridad', 'Videojuegos',
+    'Todos', 'SVOD', 'Música', 'Seguridad', 'Videojuegos', 
     'Software', 'Lectura', 'Nube', 'Bienestar', 'Educación'
   ];
 
@@ -114,7 +112,7 @@ const ExplorePage = () => {
 
   const getServiceIcon = (service: string) => {
     const icons: { [key: string]: string } = {
-      'YouTube Premium': '�',
+      'YouTube Premium': '🍿',
       'Disney+': '🍿',
       'HBO Max': '🍿',
       'Crunchyroll': '🍿',
@@ -157,35 +155,35 @@ const ExplorePage = () => {
   }, {} as { [key: string]: any[] });
 
   return (
-    <div className="min-h-screen bg-[#F1F3F8] font-inter text-[#131313]"> {/* Fondo gris claro */}
+    <div className="min-h-screen bg-gradient-to-b from-[#2D1B69] to-[#1A0B3D]">
       {/* Top Navigation */}
-      <nav className="bg-white border-b border-[#EDF1F4] py-4 shadow-sm">
+      <nav className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
+            <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
               Splitit
             </Link>
 
             {/* Navigation Icons */}
             <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
+              <Link to="/dashboard" className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
                 <Grid3X3 className="w-6 h-6" />
                 <span className="sr-only">Inicio</span>
               </Link>
-              <Link to="/explore" className="p-2 text-[#00CDD0] transition-colors duration-200">
+              <Link to="/explore" className="p-2 text-[#059669] transition-colors duration-200">
                 <Search className="w-6 h-6" />
                 <span className="sr-only">Explorar</span>
               </Link>
-              <button className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
+              <button className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
                 <MessageCircle className="w-6 h-6" />
                 <span className="sr-only">Mensajes</span>
               </button>
-
+              
               {/* CTA Button */}
               <Link
                 to="/create-group"
-                className="bg-[#00CDD0] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#00B0B3] transition-all duration-200 transform hover:scale-[1.02] flex items-center shadow-lg"
+                className="bg-[#FF6B9D] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#FF5A8A] transition-all duration-200 transform hover:scale-[1.02] flex items-center"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Compartir una suscripción
@@ -196,9 +194,9 @@ const ExplorePage = () => {
                 <img
                   src={profileData.avatar}
                   alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover border-2 border-[#00CDD0] shadow-md"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-[#E5E7EB]"
                 />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#00D08C] rounded-full border-2 border-white"></div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#10B981] rounded-full border-2 border-white"></div>
               </Link>
             </div>
           </div>
@@ -210,14 +208,14 @@ const ExplorePage = () => {
         {/* Search Bar */}
         <div className="relative mb-8">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-600" /> {/* Color de icono ajustado */}
+            <Search className="h-5 w-5 text-white opacity-60" />
           </div>
           <input
             type="text"
             placeholder="Buscar"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-full pl-12 pr-4 py-4 bg-white border border-[#EDF1F4] rounded-[10px] text-[#131313] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#00CDD0] focus:border-transparent transition-all duration-200 shadow-[0_5px_30px_rgba(43,59,93,0.08)]"
+            className="block w-full pl-12 pr-4 py-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-2xl text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent transition-all duration-200 backdrop-blur-sm"
           />
         </div>
 
@@ -227,10 +225,10 @@ const ExplorePage = () => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 shadow-sm ${
+              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 activeCategory === category
-                  ? 'bg-[#00CDD0] text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-[#EDF1F4]'
+                  ? 'bg-[#059669] text-white'
+                  : 'bg-white bg-opacity-10 text-white hover:bg-opacity-20'
               }`}
             >
               {category}
@@ -250,9 +248,9 @@ const ExplorePage = () => {
                     {categoryName === 'SVOD' ? '🍿' : '🎵'}
                   </span>
                 </div>
-                <h2 className="text-xl font-bold text-[#131313]">{categoryName}</h2>
+                <h2 className="text-xl font-bold text-white">{categoryName}</h2>
               </div>
-              <button className="text-gray-600 hover:text-[#00CDD0] transition-opacity duration-200">
+              <button className="text-white opacity-60 hover:opacity-100 transition-opacity duration-200">
                 Ver todo
               </button>
             </div>
@@ -262,23 +260,23 @@ const ExplorePage = () => {
                 <Link
                   key={group.id}
                   to={`/group/${group.id}`}
-                  className="bg-white rounded-[10px] p-[20px] hover:bg-gray-50 transition-all duration-300 transform hover:scale-[1.02] border border-[#EDF1F4] shadow-[0_5px_30px_rgba(43,59,93,0.08)]"
+                  className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover:bg-opacity-20 transition-all duration-300 transform hover:scale-[1.02] border border-white border-opacity-10"
                 >
                   <div className="text-center">
-                    <div className={`w-16 h-16 ${getServiceColor(group.service)} rounded-[10px] flex items-center justify-center mx-auto mb-4`}> {/* Ajustado a 10px rounded */}
+                    <div className={`w-16 h-16 ${getServiceColor(group.service)} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
                       <span className="text-white text-2xl">{getServiceIcon(group.service)}</span>
                     </div>
-
-                    <h3 className="text-[#131313] font-semibold text-lg mb-2">{group.service}</h3>
-
+                    
+                    <h3 className="text-white font-semibold text-lg mb-2">{group.service}</h3>
+                    
                     <div className="text-center mb-4">
-                      <div className="text-2xl font-bold text-[#131313] mb-1">
+                      <div className="text-2xl font-bold text-white mb-1">
                         {group.price.toFixed(2)}€
                       </div>
-                      <div className="text-gray-700 text-sm">/mes</div>
+                      <div className="text-white opacity-60 text-sm">/mes</div>
                     </div>
 
-                    <div className="text-gray-700 text-sm mb-4">
+                    <div className="text-white opacity-80 text-sm mb-4">
                       A partir de
                     </div>
 
@@ -295,7 +293,7 @@ const ExplorePage = () => {
                       )}
                     </div>
 
-                    <div className="text-gray-700 text-xs">
+                    <div className="text-white opacity-60 text-xs">
                       {group.availableSlots} de {group.totalSlots} plazas disponibles
                     </div>
                   </div>
