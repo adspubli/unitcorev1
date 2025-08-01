@@ -377,44 +377,45 @@ const GroupDetailsPage = () => {
 
           {/* Columna Derecha - Lista de Miembros */}
           <div className="lg:col-span-2">
-            <div className="space-y-6">
+            <div className="space-y-4"> {/* Reducimos el espacio entre elementos */}
               {groupData.members.map((member) => (
                 <div
                   key={member.id}
-                  className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] flex items-center justify-between shadow-[0_5px_30px_rgba(43,59,93,0.08)] h-[110px] pl-[30px] pr-[30px] mb-[15px]"
+                  // Ajustamos el padding, eliminamos altura fija y centramos items para móvil
+                  className="bg-white rounded-[10px] p-4 border border-[#EDF1F4] flex items-center justify-between shadow-sm md:shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-2 md:mb-[15px] flex-wrap sm:flex-nowrap"
                 >
-                  <div className="flex items-center">
-                    <div className="relative mr-5">
+                  <div className="flex items-center w-full sm:w-auto mb-2 sm:mb-0"> {/* Ocupa todo el ancho en móvil, luego auto */}
+                    <div className="relative mr-3"> {/* Reducimos el margen */}
                       <img
                         src={member.avatar}
                         alt={member.name}
-                        className="w-14 h-14 rounded-full object-cover border-2 border-[#EDF1F4] shadow-md"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-[#EDF1F4] shadow-md" // Reducimos tamaño de avatar
                       />
                       {member.isOwner && (
-                        <div className="absolute -top-1 -right-1 w-7 h-7 bg-yellow-500 rounded-full flex items-center justify-center shadow-md">
-                          <span className="text-white text-sm">👑</span>
+                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center shadow-md"> {/* Reducimos tamaño del ícono de propietario */}
+                          <span className="text-white text-xs">👑</span>
                         </div>
                       )}
                     </div>
-                    <div>
-                      <h3 className="text-[#131313] font-semibold text-lg">{member.name}</h3>
-                      <p className="text-gray-700 text-sm">
+                    <div className="flex-1"> {/* Permite que el texto ocupe el espacio restante */}
+                      <h3 className="text-[#131313] font-semibold text-base">{member.name}</h3> {/* Ajustamos tamaño de fuente */}
+                      <p className="text-gray-700 text-xs"> {/* Ajustamos tamaño de fuente */}
                         está compartiendo {groupData.service}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-5">
-                    <div className="text-right">
-                      <div className="text-[#131313] font-extrabold text-xl flex items-center">
-                        <Zap className="w-5 h-5 text-[#00CDD0] mr-1" />
+                  <div className="flex items-center justify-between w-full sm:w-auto mt-2 sm:mt-0"> {/* Ocupa todo el ancho en móvil, luego auto */}
+                    <div className="text-left sm:text-right mr-4"> {/* Alineación de texto y margen */}
+                      <div className="text-[#131313] font-extrabold text-lg flex items-center"> {/* Ajustamos tamaño de fuente */}
+                        <Zap className="w-4 h-4 text-[#00CDD0] mr-1" /> {/* Reducimos tamaño del ícono */}
                         {groupData.price.toFixed(2)}€
                       </div>
-                      <div className="text-gray-700 text-sm">/mes</div>
+                      <div className="text-gray-700 text-xs">/mes</div> {/* Ajustamos tamaño de fuente */}
                     </div>
                     <button
                       onClick={() => setShowJoinModal(true)}
-                      className="bg-[#00CDD0] text-white px-7 py-3 rounded-full font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
+                      className="bg-[#00CDD0] text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg" // Ajustamos padding y tamaño de fuente
                     >
                       Únete
                     </button>
@@ -472,4 +473,3 @@ const GroupDetailsPage = () => {
 };
 
 export default GroupDetailsPage;
-
