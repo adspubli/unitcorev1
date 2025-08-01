@@ -472,3 +472,4 @@ const GroupDetailsPage = () => {
 };
 
 export default GroupDetailsPage;
+
