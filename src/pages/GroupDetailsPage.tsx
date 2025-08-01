@@ -23,7 +23,7 @@ interface ProfileData {
   avatar: string;
 }
 
-// Componente de navegación móvil/escritorio
+// Componente de navegación móvil/escritorio (barra superior)
 // Este componente maneja la barra de navegación superior, adaptándose a pantallas móviles y de escritorio.
 const AppNavigation = ({ profileData }: { profileData: ProfileData }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -149,12 +149,47 @@ const AppNavigation = ({ profileData }: { profileData: ProfileData }) => {
   );
 };
 
+// Componente de navegación inferior (visible solo en móvil)
+const BottomNavigationBar = ({ profileData }: { profileData: ProfileData }) => {
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg md:hidden z-50">
+      <div className="flex justify-around items-center h-16">
+        <Link to="/dashboard" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
+          <Grid3X3 className="w-6 h-6" />
+          <span>Inicio</span>
+        </Link>
+        <Link to="/explore" className="flex flex-col items-center text-[#00CDD0] transition-colors duration-200 text-xs">
+          <Search className="w-6 h-6" />
+          <span>Explorar</span>
+        </Link>
+        <Link to="/create-group" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
+          <Plus className="w-6 h-6" />
+          <span>Compartir</span>
+        </Link>
+        <button className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
+          <MessageCircle className="w-6 h-6" />
+          <span>Mensajes</span>
+        </button>
+        <Link to="/profile" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
+          <img
+            src={profileData.avatar}
+            alt="Profile"
+            className="w-6 h-6 rounded-full object-cover"
+          />
+          <span>Perfil</span>
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+
 // Componente principal GroupDetailsPage
 const GroupDetailsPage = () => {
   const { id } = useParams();
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  const profileData: ProfileData = { // Aseguramos que profileData tenga el tipo correcto aquí también
+  const profileData: ProfileData = {
     name: 'Yonathan Montilla',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'
   };
@@ -227,7 +262,8 @@ const GroupDetailsPage = () => {
       <AppNavigation profileData={profileData} />
 
       {/* Contenido Principal */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Añadimos padding-bottom para que el contenido no quede oculto por la barra de navegación inferior en móvil */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24"> {/* pb-24 para dejar espacio a la barra inferior */}
         {/* Encabezado de la página de detalles del grupo */}
         <div className="flex items-center mb-10">
           <Link
@@ -429,6 +465,8 @@ const GroupDetailsPage = () => {
           </div>
         </div>
       )}
+      {/* Barra de navegación inferior para móviles */}
+      <BottomNavigationBar profileData={profileData} />
     </div>
   );
 };
