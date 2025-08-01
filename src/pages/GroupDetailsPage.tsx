@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Star, // Usaremos Star para el rating
   Zap, // Usaremos Zap para el precio
-  Award, // Nuevo: para "Ingeniería de confianza"
+  Award, // Nuevo: para "Índice de confianza"
   Clock // Nuevo: para "Tiempo de respuesta"
 } from 'lucide-react';
 
@@ -174,10 +174,10 @@ const GroupDetailsPage = () => {
               <div className="space-y-5 mb-7">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-9 h-9 bg-yellow-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
-                      <Award className="w-5 h-5 text-white" /> {/* Icono de Award para confianza */}
+                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md"> {/* Fondo eliminado */}
+                      <Award className="w-5 h-5 text-[#131313]" /> {/* Icono de Award con color #131313 */}
                     </div>
-                    <span className="text-[#131313] text-base">Ingeniería de confianza</span> {/* Texto actualizado */}
+                    <span className="text-[#131313] text-base">Índice de confianza</span> {/* Texto actualizado */}
                   </div>
                   <div className="w-7 h-7 bg-[#00D08C] rounded-full flex items-center justify-center shadow-md">
                     <span className="text-white text-sm">✓</span>
@@ -186,8 +186,8 @@ const GroupDetailsPage = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
-                      <Clock className="w-5 h-5 text-white" /> {/* Icono de Clock para tiempo de respuesta */}
+                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md"> {/* Fondo eliminado */}
+                      <Clock className="w-5 h-5 text-[#131313]" /> {/* Icono de Clock con color #131313 */}
                     </div>
                     <span className="text-[#131313] text-base">Tiempo de respuesta</span> {/* Texto actualizado */}
                   </div>
