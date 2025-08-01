@@ -93,3 +93,45 @@ html {
 .shadow-3xl {
   box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
 }
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Ensure touch targets are at least 44px */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Optimize tap highlights */
+  * {
+    -webkit-tap-highlight-color: rgba(5, 150, 105, 0.1);
+  }
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+/* Safe area insets for devices with notches */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}

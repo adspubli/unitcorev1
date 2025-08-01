@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Grid3X3, 
-  Search, 
-  MessageCircle, 
-  Plus,
-  X
-} from 'lucide-react';
+import { Plus, X } from 'lucide-react';
+import MobileNavbar from '../components/MobileNavbar';
 
 const DashboardPage = () => {
   const [showActionModal, setShowActionModal] = useState(false);
@@ -18,55 +13,14 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F7F9F8]">
-      {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
-              Unitcore
-            </Link>
-
-            {/* Navigation Icons */}
-            <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
-                <Grid3X3 className="w-6 h-6" />
-                <span className="sr-only">Inicio</span>
-              </Link>
-              <Link to="/explore" className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
-                <Search className="w-6 h-6" />
-                <span className="sr-only">Explorar</span>
-              </Link>
-              <button className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
-                <MessageCircle className="w-6 h-6" />
-                <span className="sr-only">Mensajes</span>
-              </button>
-              
-              {/* CTA Button */}
-              <button 
-                onClick={() => setShowActionModal(true)}
-                className="bg-[#FF6B9D] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#FF5A8A] transition-all duration-200 transform hover:scale-[1.02] flex items-center"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Compartir una suscripción
-              </button>
-
-              {/* Profile Avatar */}
-              <Link to="/profile" className="relative">
-                <img
-                  src={profileData.avatar}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full object-cover border-2 border-[#E5E7EB]"
-                />
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#10B981] rounded-full border-2 border-white"></div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Mobile Optimized Navigation */}
+      <MobileNavbar 
+        profileData={profileData}
+        onCreateGroup={() => setShowActionModal(true)}
+      />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
         {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Suscripción</h1>
@@ -97,15 +51,15 @@ const DashboardPage = () => {
         </div>
 
         {/* Add Subscription Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Plus className="w-8 h-8 text-[#9CA3AF]" />
           </div>
           <h3 className="text-xl font-bold text-[#0A0A0A] mb-2">Agregar una suscripción</h3>
-          <p className="text-[#4A4A4A] mb-6">Comparte tus suscripciones o únete a grupos existentes</p>
+          <p className="text-[#4A4A4A] mb-6 text-sm md:text-base">Comparte tus suscripciones o únete a grupos existentes</p>
           <button 
             onClick={() => setShowActionModal(true)}
-            className="bg-[#0A0A0A] text-white px-8 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200"
+            className="bg-[#0A0A0A] text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200 text-sm md:text-base"
           >
             Comenzar
           </button>
@@ -115,16 +69,16 @@ const DashboardPage = () => {
       {/* Action Modal */}
       {showActionModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full relative">
+          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full relative mx-4">
             <button
               onClick={() => setShowActionModal(false)}
-              className="absolute top-4 right-4 p-2 text-[#9CA3AF] hover:text-[#4A4A4A] transition-colors duration-200"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 text-[#9CA3AF] hover:text-[#4A4A4A] transition-colors duration-200 rounded-lg"
             >
               <X className="w-6 h-6" />
             </button>
 
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-[#0A0A0A] mb-4">¿Qué quieres hacer?</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-[#0A0A0A] mb-4">¿Qué quieres hacer?</h2>
             </div>
 
             <div className="space-y-4">
@@ -134,8 +88,8 @@ const DashboardPage = () => {
                 className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
               >
                 <div className="text-center">
-                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669]">Compartir</h3>
-                  <p className="text-sm text-[#4A4A4A]">
+                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Compartir</h3>
+                  <p className="text-xs md:text-sm text-[#4A4A4A]">
                     Soy el/la propietario(a) de una suscripción y quiero compartirla.
                   </p>
                 </div>
@@ -147,8 +101,8 @@ const DashboardPage = () => {
                 className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
               >
                 <div className="text-center">
-                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669]">Suscribir</h3>
-                  <p className="text-sm text-[#4A4A4A]">
+                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Suscribir</h3>
+                  <p className="text-xs md:text-sm text-[#4A4A4A]">
                     Quiero suscribirme a una suscripción.
                   </p>
                 </div>
@@ -156,7 +110,7 @@ const DashboardPage = () => {
             </div>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-[#FF6B9D] font-medium">¡Fácil!</p>
+              <p className="text-xs md:text-sm text-[#FF6B9D] font-medium">¡Fácil!</p>
             </div>
           </div>
         </div>
