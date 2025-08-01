@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { 
+import {
   ArrowLeft,
   Grid3X3,
   Search,
@@ -8,7 +8,9 @@ import {
   Plus,
   ExternalLink,
   HelpCircle,
-  ChevronRight
+  ChevronRight,
+  Star, // Usaremos Star para el rating
+  Zap // Usaremos Zap para el precio
 } from 'lucide-react';
 
 const GroupDetailsPage = () => {
@@ -76,166 +78,166 @@ const GroupDetailsPage = () => {
   };
 
   const handleJoinGroup = () => {
-    // Here you would implement the actual join logic
+    // Aquí se implementaría la lógica real para unirse al grupo
     console.log('Joining group:', id);
     setShowJoinModal(false);
-    // Redirect to payment or success page
+    // Redirigir a la página de pago o de éxito
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#2D1B69] to-[#1A0B3D]">
-      {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#10062D] via-[#1A0B3D] to-[#2D1B69] font-inter text-white">
+      {/* Navegación Superior - Ajustada para nuevo diseño */}
+      <nav className="bg-transparent border-b border-white border-opacity-10 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
+            <Link to="/" className="text-3xl font-extrabold text-white tracking-tight">
               Splitit
             </Link>
 
-            {/* Navigation Icons */}
+            {/* Iconos de Navegación y Botón CTA */}
             <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
+              <Link to="/dashboard" className="p-2 text-white hover:text-purple-300 transition-colors duration-200">
                 <Grid3X3 className="w-6 h-6" />
                 <span className="sr-only">Inicio</span>
               </Link>
-              <Link to="/explore" className="p-2 text-[#059669] transition-colors duration-200">
+              <Link to="/explore" className="p-2 text-purple-300 transition-colors duration-200">
                 <Search className="w-6 h-6" />
                 <span className="sr-only">Explorar</span>
               </Link>
-              <button className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200">
+              <button className="p-2 text-white hover:text-purple-300 transition-colors duration-200">
                 <MessageCircle className="w-6 h-6" />
                 <span className="sr-only">Mensajes</span>
               </button>
-              
-              {/* CTA Button */}
+
+              {/* Botón CTA */}
               <Link
                 to="/create-group"
-                className="bg-[#FF6B9D] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#FF5A8A] transition-all duration-200 transform hover:scale-[1.02] flex items-center"
+                className="bg-purple-600 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-purple-700 transition-all duration-200 transform hover:scale-[1.02] flex items-center shadow-lg"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Compartir una suscripción
               </Link>
 
-              {/* Profile Avatar */}
+              {/* Avatar de Perfil */}
               <Link to="/profile" className="relative">
                 <img
                   src={profileData.avatar}
                   alt="Profile"
-                  className="w-8 h-8 rounded-full object-cover border-2 border-[#E5E7EB]"
+                  className="w-9 h-9 rounded-full object-cover border-2 border-purple-400 shadow-md"
                 />
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#10B981] rounded-full border-2 border-white"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-[#10062D]"></div>
               </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="flex items-center mb-8">
-          <Link 
-            to="/explore" 
-            className="p-2 text-white hover:text-[#059669] transition-colors duration-200 mr-4"
+      {/* Contenido Principal */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Encabezado - Ajustado para nuevo diseño */}
+        <div className="flex items-center mb-10">
+          <Link
+            to="/explore"
+            className="p-2 text-white hover:text-purple-300 transition-colors duration-200 mr-4"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-7 h-7" />
           </Link>
-          <h1 className="text-3xl font-bold text-white">{groupData.service}</h1>
-          <div className="ml-auto flex items-center space-x-4">
-            <button className="p-2 text-white hover:text-[#059669] transition-colors duration-200">
+          <h1 className="text-4xl font-extrabold text-white">{groupData.service}</h1>
+          <div className="ml-auto flex items-center space-x-5">
+            <button className="p-2 text-white hover:text-purple-300 transition-colors duration-200">
               <ExternalLink className="w-6 h-6" />
             </button>
-            <button className="p-2 text-white hover:text-[#059669] transition-colors duration-200">
+            <button className="p-2 text-white hover:text-purple-300 transition-colors duration-200">
               <HelpCircle className="w-6 h-6" />
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Group Info */}
+          {/* Columna Izquierda - Información del Grupo */}
           <div className="lg:col-span-1">
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 border border-white border-opacity-10 mb-6">
-              <div className="text-center mb-6">
-                <div className="w-20 h-20 bg-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-3xl">🍿</span>
+            <div className="bg-white bg-opacity-5 backdrop-blur-md rounded-3xl p-7 border border-white border-opacity-10 shadow-xl mb-8">
+              <div className="text-center mb-7">
+                <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-700 rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+                  <span className="text-white text-4xl">🍿</span>
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">{groupData.service}</h2>
-                <p className="text-white opacity-80 text-sm leading-relaxed">
+                <h2 className="text-2xl font-bold text-white mb-3">{groupData.service}</h2>
+                <p className="text-white opacity-75 text-base leading-relaxed">
                   {groupData.description}
                 </p>
               </div>
 
-              {/* Features */}
-              <div className="space-y-4 mb-6">
+              {/* Características */}
+              <div className="space-y-5 mb-7">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center mr-3">
-                      <span className="text-white text-sm">✓</span>
+                    <div className="w-9 h-9 bg-yellow-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
+                      <span className="text-white text-lg">✓</span>
                     </div>
-                    <span className="text-white text-sm">Factura verificada</span>
+                    <span className="text-white text-base">Factura verificada</span>
                   </div>
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
+                  <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center shadow-md">
+                    <span className="text-white text-sm">✓</span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
-                      <span className="text-white text-sm">⚡</span>
+                    <div className="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
+                      <span className="text-white text-lg">⚡</span>
                     </div>
-                    <span className="text-white text-sm">Aceptación instantánea</span>
+                    <span className="text-white text-base">Aceptación instantánea</span>
                   </div>
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
+                  <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center shadow-md">
+                    <span className="text-white text-sm">✓</span>
                   </div>
                 </div>
               </div>
 
-              {/* Sorting Options */}
-              <div className="space-y-3">
-                <h3 className="text-white font-medium">Ordenar por:</h3>
-                <div className="space-y-2">
-                  <button className="flex items-center justify-between w-full p-3 bg-white bg-opacity-5 rounded-lg hover:bg-opacity-10 transition-colors duration-200">
+              {/* Opciones de Ordenación */}
+              <div className="space-y-4">
+                <h3 className="text-white font-semibold text-lg">Ordenar por:</h3>
+                <div className="space-y-3">
+                  <button className="flex items-center justify-between w-full p-4 bg-white bg-opacity-5 rounded-xl hover:bg-opacity-10 transition-colors duration-200 shadow-md">
                     <div className="flex items-center">
-                      <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-                        <span className="text-white text-xs">★</span>
+                      <div className="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center mr-3 shadow-sm">
+                        <Star className="w-4 h-4 text-white" />
                       </div>
-                      <span className="text-white text-sm">Índice de confianza</span>
+                      <span className="text-white text-base">Índice de confianza</span>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-white opacity-60" />
+                    <ChevronRight className="w-5 h-5 text-white opacity-60" />
                   </button>
 
-                  <button className="flex items-center justify-between w-full p-3 bg-white bg-opacity-5 rounded-lg hover:bg-opacity-10 transition-colors duration-200">
+                  <button className="flex items-center justify-between w-full p-4 bg-white bg-opacity-5 rounded-xl hover:bg-opacity-10 transition-colors duration-200 shadow-md">
                     <div className="flex items-center">
-                      <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                        <span className="text-white text-xs">⏱</span>
+                      <div className="w-7 h-7 bg-purple-500 rounded-full flex items-center justify-center mr-3 shadow-sm">
+                        <span className="text-white text-base">⏱</span>
                       </div>
-                      <span className="text-white text-sm">Tiempo de respuesta</span>
+                      <span className="text-white text-base">Tiempo de respuesta</span>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-white opacity-60" />
+                    <ChevronRight className="w-5 h-5 text-white opacity-60" />
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Become Owner CTA */}
-            <div className="bg-gradient-to-r from-[#2D1B69] to-[#1A0B3D] rounded-2xl p-6 border border-[#FF6B9D] border-opacity-50">
+            {/* CTA para Convertirse en Propietario */}
+            <div className="bg-gradient-to-br from-[#2D1B69] to-[#1A0B3D] rounded-3xl p-7 border border-purple-500 border-opacity-50 shadow-xl">
               <div className="text-center">
-                <div className="w-12 h-12 bg-[#FF6B9D] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl">👑</span>
+                <div className="w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+                  <span className="text-white text-2xl">👑</span>
                 </div>
-                <h3 className="text-white font-bold mb-2">¡Conviértete en propietario!</h3>
-                <p className="text-white opacity-80 text-sm mb-4">
+                <h3 className="text-white font-bold text-xl mb-3">¡Conviértete en propietario!</h3>
+                <p className="text-white opacity-75 text-base mb-5">
                   Ahorra ya compartiendo tu suscripción a {groupData.service} Premium en este listado en unos pocos clics.
                 </p>
-                <div className="text-[#FF6B9D] font-bold text-lg mb-4">
+                <div className="text-purple-300 font-extrabold text-2xl mb-5">
                   Recupera hasta: 21.65€/mes
                 </div>
                 <Link
                   to="/create-group"
-                  className="block w-full bg-[#FF6B9D] text-white py-3 rounded-xl font-medium hover:bg-[#FF5A8A] transition-colors duration-200"
+                  className="block w-full bg-purple-600 text-white py-3.5 rounded-xl font-semibold hover:bg-purple-700 transition-colors duration-200 shadow-lg"
                 >
                   Compartir mi {groupData.service}
                 </Link>
@@ -243,46 +245,46 @@ const GroupDetailsPage = () => {
             </div>
           </div>
 
-          {/* Right Column - Members List */}
+          {/* Columna Derecha - Lista de Miembros */}
           <div className="lg:col-span-2">
-            <div className="space-y-4">
+            <div className="space-y-6">
               {groupData.members.map((member) => (
                 <div
                   key={member.id}
-                  className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 border border-white border-opacity-10 flex items-center justify-between"
+                  className="bg-white bg-opacity-5 backdrop-blur-md rounded-3xl p-6 border border-white border-opacity-10 flex items-center justify-between shadow-xl"
                 >
                   <div className="flex items-center">
-                    <div className="relative mr-4">
+                    <div className="relative mr-5">
                       <img
                         src={member.avatar}
                         alt={member.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-white border-opacity-20"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-white border-opacity-20 shadow-md"
                       />
                       {member.isOwner && (
-                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs">👑</span>
+                        <div className="absolute -top-1 -right-1 w-7 h-7 bg-yellow-500 rounded-full flex items-center justify-center shadow-md">
+                          <span className="text-white text-sm">👑</span>
                         </div>
                       )}
                     </div>
                     <div>
-                      <h3 className="text-white font-semibold">{member.name}</h3>
-                      <p className="text-white opacity-60 text-sm">
+                      <h3 className="text-white font-semibold text-lg">{member.name}</h3>
+                      <p className="text-white opacity-70 text-sm">
                         está compartiendo {groupData.service}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-5">
                     <div className="text-right">
-                      <div className="text-white font-bold text-lg flex items-center">
-                        <span className="text-yellow-400 mr-1">⚡</span>
+                      <div className="text-white font-extrabold text-xl flex items-center">
+                        <Zap className="w-5 h-5 text-yellow-400 mr-1" />
                         {groupData.price.toFixed(2)}€
                       </div>
-                      <div className="text-white opacity-60 text-sm">/mes</div>
+                      <div className="text-white opacity-70 text-sm">/mes</div>
                     </div>
                     <button
                       onClick={() => setShowJoinModal(true)}
-                      className="bg-[#059669] text-white px-6 py-2 rounded-xl font-medium hover:bg-[#10B981] transition-colors duration-200"
+                      className="bg-green-600 text-white px-7 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-200 shadow-lg"
                     >
                       Únete
                     </button>
@@ -294,38 +296,38 @@ const GroupDetailsPage = () => {
         </div>
       </div>
 
-      {/* Join Modal */}
+      {/* Modal de Unión */}
       {showJoinModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full">
-            <h2 className="text-2xl font-bold text-[#0A0A0A] mb-4 text-center">
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-5 text-center">
               Unirse al grupo
             </h2>
-            <p className="text-[#4A4A4A] mb-6 text-center">
+            <p className="text-gray-700 mb-7 text-center text-lg">
               ¿Estás seguro de que quieres unirte a este grupo de {groupData.service}?
             </p>
-            
-            <div className="bg-[#F7F9F8] rounded-xl p-4 mb-6">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[#4A4A4A]">Precio mensual:</span>
-                <span className="font-bold text-[#0A0A0A]">{groupData.price.toFixed(2)}€</span>
+
+            <div className="bg-gray-50 rounded-xl p-5 mb-7 border border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-gray-700 text-lg">Precio mensual:</span>
+                <span className="font-bold text-gray-900 text-lg">{groupData.price.toFixed(2)}€</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#4A4A4A]">Propietario:</span>
-                <span className="font-medium text-[#0A0A0A]">{groupData.owner.name}</span>
+                <span className="text-gray-700 text-lg">Propietario:</span>
+                <span className="font-medium text-gray-900 text-lg">{groupData.owner.name}</span>
               </div>
             </div>
 
             <div className="flex space-x-4">
               <button
                 onClick={() => setShowJoinModal(false)}
-                className="flex-1 px-6 py-3 border border-[#E5E7EB] text-[#4A4A4A] rounded-xl font-medium hover:border-[#0A0A0A] hover:text-[#0A0A0A] transition-colors duration-200"
+                className="flex-1 px-7 py-3.5 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-500 hover:text-gray-900 transition-colors duration-200 shadow-md"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleJoinGroup}
-                className="flex-1 px-6 py-3 bg-[#059669] text-white rounded-xl font-medium hover:bg-[#10B981] transition-colors duration-200"
+                className="flex-1 px-7 py-3.5 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-200 shadow-md"
               >
                 Confirmar
               </button>
