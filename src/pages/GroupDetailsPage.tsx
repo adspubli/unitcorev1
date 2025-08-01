@@ -237,7 +237,7 @@ const GroupDetailsPage = () => {
                 </div>
                 <Link
                   to="/create-group"
-                  className="block w-full bg-[#00CDD0] text-white py-3.5 rounded-[10px] font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
+                  className="block w-full bg-[#00CDD0] text-white py-3.5 rounded-full font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
                 >
                   Compartir mi {groupData.service}
                 </Link>
@@ -284,7 +284,7 @@ const GroupDetailsPage = () => {
                     </div>
                     <button
                       onClick={() => setShowJoinModal(true)}
-                      className="bg-[#00CDD0] text-white px-7 py-3 rounded-[10px] font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
+                      className="bg-[#00CDD0] text-white px-7 py-3 rounded-full font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
                     >
                       Únete
                     </button>
@@ -321,13 +321,13 @@ const GroupDetailsPage = () => {
             <div className="flex space-x-4">
               <button
                 onClick={() => setShowJoinModal(false)}
-                className="flex-1 px-7 py-3.5 border border-[#EDF1F4] text-[#131313] rounded-[10px] font-semibold hover:border-[#C8CCD4] hover:text-[#131313] transition-colors duration-200 shadow-md"
+                className="flex-1 px-7 py-3.5 border border-[#EDF1F4] text-[#131313] rounded-full font-semibold hover:border-[#C8CCD4] hover:text-[#131313] transition-colors duration-200 shadow-md"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleJoinGroup}
-                className="flex-1 px-7 py-3.5 bg-[#00CDD0] text-white rounded-[10px] font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-md"
+                className="flex-1 px-7 py-3.5 bg-[#00CDD0] text-white rounded-full font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-md"
               >
                 Confirmar
               </button>
