@@ -1,0 +1,12 @@
+# netlify.toml
+
+# Configuración para el build
+[build]
+  command = "npm run build"
+  publish = "dist" # Asegúrate que esta sea la carpeta de salida de tu build (Vite por defecto es 'dist')
+
+# Reglas de redirección para SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
