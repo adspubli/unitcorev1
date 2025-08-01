@@ -9,17 +9,152 @@ import {
   ExternalLink,
   HelpCircle,
   ChevronRight,
-  Star, // Usaremos Star para el rating
-  Zap, // Usaremos Zap para el precio
-  Award, // Nuevo: para "Índice de confianza"
-  Clock // Nuevo: para "Tiempo de respuesta"
+  Star,
+  Zap,
+  Award,
+  Clock,
+  Menu, // Para el icono de menú hamburguesa
+  X // Para el icono de cerrar menú
 } from 'lucide-react';
 
+// Definición de la interfaz para profileData
+interface ProfileData {
+  name: string;
+  avatar: string;
+}
+
+// Componente de navegación móvil/escritorio
+// Este componente maneja la barra de navegación superior, adaptándose a pantallas móviles y de escritorio.
+const AppNavigation = ({ profileData }: { profileData: ProfileData }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <nav className="bg-white border-b border-gray-200 py-4 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo de la aplicación */}
+          <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
+            Splitit
+          </Link>
+
+          {/* Iconos de Navegación y Botón CTA - Visible solo en escritorio (md:flex) */}
+          <div className="hidden md:flex items-center space-x-6">
+            <Link to="/dashboard" className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
+              <Grid3X3 className="w-6 h-6" />
+              <span className="sr-only">Inicio</span>
+            </Link>
+            <Link to="/explore" className="p-2 text-[#00CDD0] transition-colors duration-200">
+              <Search className="w-6 h-6" />
+              <span className="sr-only">Explorar</span>
+            </Link>
+            <button className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
+              <MessageCircle className="w-6 h-6" />
+              <span className="sr-only">Mensajes</span>
+            </button>
+
+            {/* Botón CTA para compartir suscripción */}
+            <Link
+              to="/create-group"
+              className="bg-[#00CDD0] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#00B0B3] transition-all duration-200 transform hover:scale-[1.02] flex items-center shadow-lg"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Compartir una suscripción
+            </Link>
+
+            {/* Avatar de Perfil */}
+            <Link to="/profile" className="relative">
+              <img
+                src={profileData.avatar}
+                alt="Profile"
+                className="w-9 h-9 rounded-full object-cover border-2 border-[#00CDD0] shadow-md"
+              />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#00D08C] rounded-full border-2 border-white"></div>
+            </Link>
+          </div>
+
+          {/* Botón de menú hamburguesa - Visible solo en móvil (md:hidden) */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200"
+            >
+              {/* Cambia el icono entre hamburguesa y X según el estado del menú */}
+              {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              <span className="sr-only">Abrir menú</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Menú móvil (drawer lateral) - Visible solo cuando isMobileMenuOpen es true y en móvil */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"> {/* Overlay oscuro */}
+          <div className="fixed top-0 right-0 w-64 h-full bg-white shadow-lg p-6 transform transition-transform duration-300 ease-in-out">
+            {/* Botón para cerrar el menú móvil */}
+            <div className="flex justify-end mb-6">
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200"
+              >
+                <X className="w-7 h-7" />
+                <span className="sr-only">Cerrar menú</span>
+              </button>
+            </div>
+            {/* Elementos del menú móvil */}
+            <div className="flex flex-col space-y-4">
+              <Link
+                to="/dashboard"
+                className="flex items-center text-lg font-medium text-[#131313] hover:text-[#00CDD0] transition-colors duration-200"
+                onClick={() => setIsMobileMenuOpen(false)} // Cierra el menú al hacer clic
+              >
+                <Grid3X3 className="w-5 h-5 mr-3" /> Inicio
+              </Link>
+              <Link
+                to="/explore"
+                className="flex items-center text-lg font-medium text-[#00CDD0] transition-colors duration-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Search className="w-5 h-5 mr-3" /> Explorar
+              </Link>
+              <button
+                className="flex items-center text-lg font-medium text-[#131313] hover:text-[#00CDD0] transition-colors duration-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <MessageCircle className="w-5 h-5 mr-3" /> Mensajes
+              </button>
+              <Link
+                to="/create-group"
+                className="flex items-center bg-[#00CDD0] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#00B0B3] transition-all duration-200 shadow-lg mt-4"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Plus className="w-4 h-4 mr-2" /> Compartir una suscripción
+              </Link>
+              <Link
+                to="/profile"
+                className="flex items-center text-lg font-medium text-[#131313] hover:text-[#00CDD0] transition-colors duration-200 mt-4"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <img
+                  src={profileData.avatar}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-[#00CDD0] mr-3"
+                />
+                Mi Perfil
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+// Componente principal GroupDetailsPage
 const GroupDetailsPage = () => {
   const { id } = useParams();
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  const profileData = {
+  const profileData: ProfileData = { // Aseguramos que profileData tenga el tipo correcto aquí también
     name: 'Yonathan Montilla',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'
   };
@@ -87,57 +222,13 @@ const GroupDetailsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-inter text-[#131313]"> {/* Fondo blanco */}
-      {/* Navegación Superior - Ajustada para nuevo diseño */}
-      <nav className="bg-white border-b border-gray-200 py-4 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
-              Splitit
-            </Link>
-
-            {/* Iconos de Navegación y Botón CTA */}
-            <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
-                <Grid3X3 className="w-6 h-6" />
-                <span className="sr-only">Inicio</span>
-              </Link>
-              <Link to="/explore" className="p-2 text-[#00CDD0] transition-colors duration-200">
-                <Search className="w-6 h-6" />
-                <span className="sr-only">Explorar</span>
-              </Link>
-              <button className="p-2 text-gray-600 hover:text-[#00CDD0] transition-colors duration-200">
-                <MessageCircle className="w-6 h-6" />
-                <span className="sr-only">Mensajes</span>
-              </button>
-
-              {/* Botón CTA */}
-              <Link
-                to="/create-group"
-                className="bg-[#00CDD0] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#00B0B3] transition-all duration-200 transform hover:scale-[1.02] flex items-center shadow-lg"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Compartir una suscripción
-              </Link>
-
-              {/* Avatar de Perfil */}
-              <Link to="/profile" className="relative">
-                <img
-                  src={profileData.avatar}
-                  alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover border-2 border-[#00CDD0] shadow-md"
-                />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#00D08C] rounded-full border-2 border-white"></div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-white font-inter text-[#131313]">
+      {/* Navegación Superior - Usando el componente AppNavigation */}
+      <AppNavigation profileData={profileData} />
 
       {/* Contenido Principal */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Encabezado - Ajustado para nuevo diseño */}
+        {/* Encabezado de la página de detalles del grupo */}
         <div className="flex items-center mb-10">
           <Link
             to="/explore"
@@ -156,10 +247,11 @@ const GroupDetailsPage = () => {
           </div>
         </div>
 
+        {/* Contenido principal de la página de detalles */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Columna Izquierda - Información del Grupo */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-[15px]"> {/* Estilo de listado */}
+            <div className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-[15px]">
               <div className="text-center mb-7">
                 <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-700 rounded-[10px] flex items-center justify-center mx-auto mb-5 shadow-lg">
                   <span className="text-white text-4xl">🍿</span>
@@ -170,14 +262,14 @@ const GroupDetailsPage = () => {
                 </p>
               </div>
 
-              {/* Características */}
+              {/* Características del servicio */}
               <div className="space-y-5 mb-7">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md"> {/* Fondo eliminado */}
-                      <Award className="w-5 h-5 text-[#131313]" /> {/* Icono de Award con color #131313 */}
+                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md">
+                      <Award className="w-5 h-5 text-[#131313]" />
                     </div>
-                    <span className="text-[#131313] text-base">Índice de confianza</span> {/* Texto actualizado */}
+                    <span className="text-[#131313] text-base">Índice de confianza</span>
                   </div>
                   <div className="w-7 h-7 bg-[#00D08C] rounded-full flex items-center justify-center shadow-md">
                     <span className="text-white text-sm">✓</span>
@@ -186,10 +278,10 @@ const GroupDetailsPage = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md"> {/* Fondo eliminado */}
-                      <Clock className="w-5 h-5 text-[#131313]" /> {/* Icono de Clock con color #131313 */}
+                    <div className="w-9 h-9 flex items-center justify-center mr-4 shadow-md">
+                      <Clock className="w-5 h-5 text-[#131313]" />
                     </div>
-                    <span className="text-[#131313] text-base">Tiempo de respuesta</span> {/* Texto actualizado */}
+                    <span className="text-[#131313] text-base">Tiempo de respuesta</span>
                   </div>
                   <div className="w-7 h-7 bg-[#00D08C] rounded-full flex items-center justify-center shadow-md">
                     <span className="text-white text-sm">✓</span>
@@ -201,7 +293,7 @@ const GroupDetailsPage = () => {
               <div className="space-y-4">
                 <h3 className="text-[#131313] font-semibold text-lg">Ordenar por:</h3>
                 <div className="space-y-3">
-                  <button className="flex items-center justify-between w-full h-[110px] bg-white rounded-[10px] hover:bg-gray-50 transition-colors duration-200 shadow-[0_5px_30px_rgba(43,59,93,0.08)] p-[20px] mb-[15px] pl-[30px] pr-[30px]"> {/* Estilo de listado */}
+                  <button className="flex items-center justify-between w-full h-[110px] bg-white rounded-[10px] hover:bg-gray-50 transition-colors duration-200 shadow-[0_5px_30px_rgba(43,59,93,0.08)] p-[20px] mb-[15px] pl-[30px] pr-[30px]">
                     <div className="flex items-center">
                       <div className="w-7 h-7 bg-[#EE623A] rounded-full flex items-center justify-center mr-3 shadow-sm">
                         <Star className="w-4 h-4 text-white" />
@@ -211,7 +303,7 @@ const GroupDetailsPage = () => {
                     <ChevronRight className="w-5 h-5 text-gray-600" />
                   </button>
 
-                  <button className="flex items-center justify-between w-full h-[110px] bg-white rounded-[10px] hover:bg-gray-50 transition-colors duration-200 shadow-[0_5px_30px_rgba(43,59,93,0.08)] p-[20px] mb-[15px] pl-[30px] pr-[30px]"> {/* Estilo de listado */}
+                  <button className="flex items-center justify-between w-full h-[110px] bg-white rounded-[10px] hover:bg-gray-50 transition-colors duration-200 shadow-[0_5px_30px_rgba(43,59,93,0.08)] p-[20px] mb-[15px] pl-[30px] pr-[30px]">
                     <div className="flex items-center">
                       <div className="w-7 h-7 bg-purple-500 rounded-full flex items-center justify-center mr-3 shadow-sm">
                         <span className="text-white text-base">⏱</span>
@@ -225,7 +317,7 @@ const GroupDetailsPage = () => {
             </div>
 
             {/* CTA para Convertirse en Propietario */}
-            <div className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] shadow-[0_5px_30px_rgba(43,59,93,0.08)]"> {/* Estilo de listado */}
+            <div className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] shadow-[0_5px_30px_rgba(43,59,93,0.08)]">
               <div className="text-center">
                 <div className="w-14 h-14 bg-[#00CDD0] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
                   <span className="text-white text-2xl">👑</span>
@@ -253,7 +345,7 @@ const GroupDetailsPage = () => {
               {groupData.members.map((member) => (
                 <div
                   key={member.id}
-                  className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] flex items-center justify-between shadow-[0_5px_30px_rgba(43,59,93,0.08)] h-[110px] pl-[30px] pr-[30px] mb-[15px]" // Estilo de listado
+                  className="bg-white rounded-[10px] p-[20px] border border-[#EDF1F4] flex items-center justify-between shadow-[0_5px_30px_rgba(43,59,93,0.08)] h-[110px] pl-[30px] pr-[30px] mb-[15px]"
                 >
                   <div className="flex items-center">
                     <div className="relative mr-5">
@@ -279,7 +371,7 @@ const GroupDetailsPage = () => {
                   <div className="flex items-center space-x-5">
                     <div className="text-right">
                       <div className="text-[#131313] font-extrabold text-xl flex items-center">
-                        <Zap className="w-5 h-5 text-[#00CDD0] mr-1" /> {/* Usando spliiit-color para el rayo */}
+                        <Zap className="w-5 h-5 text-[#00CDD0] mr-1" />
                         {groupData.price.toFixed(2)}€
                       </div>
                       <div className="text-gray-700 text-sm">/mes</div>
@@ -301,7 +393,7 @@ const GroupDetailsPage = () => {
       {/* Modal de Unión */}
       {showJoinModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-[10px] p-8 max-w-md w-full shadow-[0_5px_30px_rgba(43,59,93,0.08)]"> {/* Estilo de listado */}
+          <div className="bg-white rounded-[10px] p-8 max-w-md w-full shadow-[0_5px_30px_rgba(43,59,93,0.08)]">
             <h2 className="text-3xl font-bold text-[#131313] mb-5 text-center">
               Unirse al grupo
             </h2>
@@ -309,7 +401,7 @@ const GroupDetailsPage = () => {
               ¿Estás seguro de que quieres unirte a este grupo de {groupData.service}?
             </p>
 
-            <div className="bg-[#F1F3F8] rounded-[10px] p-5 mb-7 border border-[#EDF1F4]"> {/* Usando grey-main y grey-border */}
+            <div className="bg-[#F1F3F8] rounded-[10px] p-5 mb-7 border border-[#EDF1F4]">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[#131313] text-lg">Precio mensual:</span>
                 <span className="font-bold text-[#131313] text-lg">{groupData.price.toFixed(2)}€</span>
