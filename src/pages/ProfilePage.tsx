@@ -285,7 +285,7 @@ const ProfilePage = () => {
 
               {activeTab === 'payment' && (
                 <div>
-                  <h2 className="text-xl font-bold text-[#0A0A0A] mb-6">Medios de pago</h2>
+                  <h2 className="text-xl font-bold text-[#0A0A0A] mb-6">Walle</h2>
                   <div className="text-center py-12">
                     <CreditCard className="w-16 h-16 text-[#9CA3AF] mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-[#4A4A4A] mb-2">
