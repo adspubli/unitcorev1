@@ -117,7 +117,7 @@ const ExplorePage = () => {
       'YouTube Premium': '🍿',
       'Disney+': '🍿',
       'HBO Max': '🍿',
-      'Crunchyroll': '🍿',
+      'Crunchyroll': '�',
       'Spotify': '🎵',
       'Apple One': '🎵',
       'Apple Music': '🎵'
@@ -157,19 +157,19 @@ const ExplorePage = () => {
   }, {} as { [key: string]: any[] });
 
   return (
-    <div className="min-h-screen bg-[#1A0B3D] font-inter text-white"> {/* Fondo oscuro principal */}
+    <div className="min-h-screen bg-[#F1F3F8] font-inter text-[#131313]"> {/* Fondo gris claro */}
       {/* Top Navigation */}
-      <nav className="bg-transparent border-b border-white border-opacity-10 py-4">
+      <nav className="bg-white border-b border-white border-opacity-10 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="text-3xl font-extrabold text-white tracking-tight">
+            <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
               Splitit
             </Link>
 
             {/* Navigation Icons */}
             <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-white hover:text-[#00CDD0] transition-colors duration-200">
+              <Link to="/dashboard" className="p-2 text-[#131313] hover:text-[#00CDD0] transition-colors duration-200">
                 <Grid3X3 className="w-6 h-6" />
                 <span className="sr-only">Inicio</span>
               </Link>
@@ -177,7 +177,7 @@ const ExplorePage = () => {
                 <Search className="w-6 h-6" />
                 <span className="sr-only">Explorar</span>
               </Link>
-              <button className="p-2 text-white hover:text-[#00CDD0] transition-colors duration-200">
+              <button className="p-2 text-[#131313] hover:text-[#00CDD0] transition-colors duration-200">
                 <MessageCircle className="w-6 h-6" />
                 <span className="sr-only">Mensajes</span>
               </button>
@@ -210,14 +210,14 @@ const ExplorePage = () => {
         {/* Search Bar */}
         <div className="relative mb-8">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-white opacity-70" />
+            <Search className="h-5 w-5 text-[#131313] opacity-70" />
           </div>
           <input
             type="text"
             placeholder="Buscar"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-full pl-12 pr-4 py-4 bg-[#2D1B69] border border-white border-opacity-10 rounded-[10px] text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#00CDD0] focus:border-transparent transition-all duration-200 shadow-lg"
+            className="block w-full pl-12 pr-4 py-4 bg-white border border-[#EDF1F4] rounded-[10px] text-[#131313] placeholder-[#131313] placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#00CDD0] focus:border-transparent transition-all duration-200 shadow-lg"
           />
         </div>
 
@@ -230,7 +230,7 @@ const ExplorePage = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 shadow-sm ${
                 activeCategory === category
                   ? 'bg-[#00CDD0] text-white'
-                  : 'bg-[#2D1B69] text-white text-opacity-80 hover:bg-white hover:bg-opacity-10'
+                  : 'bg-white text-[#131313] text-opacity-80 hover:bg-gray-50 border border-[#EDF1F4]'
               }`}
             >
               {category}
@@ -250,9 +250,9 @@ const ExplorePage = () => {
                     {categoryName === 'SVOD' ? '🍿' : '🎵'}
                   </span>
                 </div>
-                <h2 className="text-xl font-bold text-white">{categoryName}</h2>
+                <h2 className="text-xl font-bold text-[#131313]">{categoryName}</h2>
               </div>
-              <button className="text-white opacity-70 hover:opacity-100 transition-opacity duration-200">
+              <button className="text-[#131313] opacity-70 hover:opacity-100 transition-opacity duration-200">
                 Ver todo
               </button>
             </div>
@@ -262,7 +262,7 @@ const ExplorePage = () => {
                 <Link
                   key={group.id}
                   to={`/group/${group.id}`}
-                  className="bg-[#2D1B69] rounded-[10px] p-0 overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-xl border border-white border-opacity-10"
+                  className="bg-white rounded-[10px] p-0 overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-xl border border-[#EDF1F4]"
                 >
                   {/* Top section of the card */}
                   <div className={`relative px-4 pt-6 pb-2 text-center rounded-t-[10px] ${getServiceColor(group.service)}`}>
@@ -277,10 +277,10 @@ const ExplorePage = () => {
                   {/* Bottom section of the card */}
                   <div className="p-4 flex items-center justify-between">
                     <div className="text-left">
-                      <div className="text-2xl font-extrabold text-white mb-0.5">
+                      <div className="text-2xl font-extrabold text-[#131313] mb-0.5">
                         {group.price.toFixed(2)}€
                       </div>
-                      <div className="text-white opacity-70 text-sm">/mes</div>
+                      <div className="text-gray-700 text-sm">/mes</div>
                     </div>
                     <button className="bg-[#00CDD0] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#00B0B3] transition-colors duration-200 shadow-md">
                       Únete
