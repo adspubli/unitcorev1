@@ -62,7 +62,7 @@ const ProfilePage = () => {
     {
       label: 'Nombre y Apellido',
       value: profileData.name,
-      placeholder: 'Yonathan Montilla'
+      placeholder: 'Jonathan Montilla'
     },
     {
       label: 'Seudónimo',
