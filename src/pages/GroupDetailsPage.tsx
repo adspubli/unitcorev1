@@ -162,9 +162,12 @@ const BottomNavigationBar = ({ profileData }: { profileData: ProfileData }) => {
           <Search className="w-6 h-6" />
           <span>Explorar</span>
         </Link>
-        <Link to="/create-group" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
-          <Plus className="w-6 h-6" />
-          <span>Compartir</span>
+        {/* Botón central "Compartir" con estilo de la captura de pantalla */}
+        <Link to="/create-group" className="flex flex-col items-center text-white text-xs -mt-6"> {/* -mt-6 para elevarlo un poco */}
+          <div className="w-14 h-14 bg-[#FB3C67] rounded-full flex items-center justify-center shadow-lg border-4 border-white"> {/* Color rojo de la captura */}
+            <Plus className="w-8 h-8 text-white" />
+          </div>
+          <span className="mt-1 text-gray-600">Compartir</span> {/* Texto debajo del botón */}
         </Link>
         <button className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
           <MessageCircle className="w-6 h-6" />
@@ -381,11 +384,11 @@ const GroupDetailsPage = () => {
               {groupData.members.map((member) => (
                 <div
                   key={member.id}
-                  // Ajustamos el padding, eliminamos altura fija y centramos items para móvil
-                  className="bg-white rounded-[10px] py-2 px-4 border border-[#EDF1F4] flex items-center justify-between shadow-sm md:shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-2 md:mb-[15px]"
+                  // Clases para el contenedor de cada miembro, replicando el estilo de tarjeta compacta
+                  className="bg-white rounded-[10px] py-2 px-4 border border-[#EDF1F4] flex items-center justify-between shadow-sm md:shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-2"
                 >
                   <div className="flex items-center">
-                    <div className="relative mr-3"> {/* Slightly more margin for better separation */}
+                    <div className="relative mr-3"> {/* Margen para separar el avatar del texto */}
                       <img
                         src={member.avatar}
                         alt={member.name}
@@ -398,16 +401,16 @@ const GroupDetailsPage = () => {
                       )}
                     </div>
                     <div>
-                      <h3 className="text-[#131313] font-semibold text-sm leading-tight">{member.name}</h3> {/* Added leading-tight */}
-                      <p className="text-gray-700 text-xs leading-tight"> {/* Added leading-tight */}
+                      <h3 className="text-[#131313] font-semibold text-sm leading-tight">{member.name}</h3>
+                      <p className="text-gray-700 text-xs leading-tight">
                         está compartiendo {groupData.service}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-end ml-auto">
-                    <div className="text-right"> {/* Removed mb-1, let button provide its own margin */}
-                      <div className="text-[#131313] font-extrabold text-lg flex items-center justify-end"> {/* Added justify-end to align Zap icon to the right of price */}
+                  <div className="flex flex-col items-end ml-auto"> {/* Alinea el precio y el botón a la derecha */}
+                    <div className="text-right">
+                      <div className="text-[#131313] font-extrabold text-lg flex items-center justify-end"> {/* Alinea el icono Zap con el precio */}
                         <Zap className="w-4 h-4 text-[#00CDD0] mr-1" />
                         {groupData.price.toFixed(2)}€
                       </div>
@@ -415,7 +418,7 @@ const GroupDetailsPage = () => {
                     </div>
                     <button
                       onClick={() => setShowJoinModal(true)}
-                      className="bg-[#00CDD0] text-white px-3 py-1 mt-2 rounded-full font-semibold text-xs hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg" /* Adjusted padding, added mt-2 */
+                      className="bg-[#00CDD0] text-white px-3 py-1 mt-2 rounded-full font-semibold text-xs hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
                     >
                       Únete
                     </button>
