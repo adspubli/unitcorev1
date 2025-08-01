@@ -384,41 +384,41 @@ const GroupDetailsPage = () => {
               {groupData.members.map((member) => (
                 <div
                   key={member.id}
-                  // Clases para el contenedor de cada miembro, replicando el estilo de tarjeta compacta
-                  className="bg-white rounded-[10px] py-2 px-4 border border-[#EDF1F4] flex items-center justify-between shadow-sm md:shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-2"
+                  // Clases para el contenedor de cada miembro, aplicando el tamaño fijo y centrado
+                  // w-full para asegurar que no desborde en pantallas muy pequeñas, pero sm:w-[366px] para el tamaño deseado
+                  className="bg-white rounded-[10px] p-4 border border-[#EDF1F4] shadow-sm md:shadow-[0_5px_30px_rgba(43,59,93,0.08)] mb-2
+                             w-full sm:w-[366px] h-[268px] mx-auto flex flex-col items-center justify-center"
                 >
-                  <div className="flex items-center">
-                    <div className="relative mr-3"> {/* Margen para separar el avatar del texto */}
+                  <div className="flex flex-col items-center mb-4"> {/* Centrado de avatar y texto */}
+                    <div className="relative mb-2"> {/* Margen debajo del avatar */}
                       <img
                         src={member.avatar}
                         alt={member.name}
-                        className="w-10 h-10 rounded-full object-cover border-2 border-[#EDF1F4] shadow-md"
+                        className="w-16 h-16 rounded-full object-cover border-2 border-[#EDF1F4] shadow-md" // Avatar un poco más grande
                       />
                       {member.isOwner && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center shadow-md">
-                          <span className="text-white text-xs">👑</span>
+                        <div className="absolute -top-1 -right-1 w-7 h-7 bg-yellow-500 rounded-full flex items-center justify-center shadow-md">
+                          <span className="text-white text-sm">👑</span>
                         </div>
                       )}
                     </div>
-                    <div>
-                      <h3 className="text-[#131313] font-semibold text-sm leading-tight">{member.name}</h3>
-                      <p className="text-gray-700 text-xs leading-tight">
-                        está compartiendo {groupData.service}
-                      </p>
-                    </div>
+                    <h3 className="text-[#131313] font-semibold text-lg text-center">{member.name}</h3> {/* Nombre centrado, fuente más grande */}
+                    <p className="text-gray-700 text-sm text-center">
+                      está compartiendo {groupData.service}
+                    </p>
                   </div>
 
-                  <div className="flex flex-col items-end ml-auto"> {/* Alinea el precio y el botón a la derecha */}
-                    <div className="text-right">
-                      <div className="text-[#131313] font-extrabold text-lg flex items-center justify-end"> {/* Alinea el icono Zap con el precio */}
-                        <Zap className="w-4 h-4 text-[#00CDD0] mr-1" />
+                  <div className="flex flex-col items-center mt-auto"> {/* Empujado hacia abajo, centrado */}
+                    <div className="text-center mb-2">
+                      <div className="text-[#131313] font-extrabold text-xl flex items-center justify-center"> {/* Precio centrado */}
+                        <Zap className="w-5 h-5 text-[#00CDD0] mr-1" />
                         {groupData.price.toFixed(2)}€
                       </div>
-                      <div className="text-gray-700 text-xs">/mes</div>
+                      <div className="text-gray-700 text-sm">/mes</div>
                     </div>
                     <button
                       onClick={() => setShowJoinModal(true)}
-                      className="bg-[#00CDD0] text-white px-3 py-1 mt-2 rounded-full font-semibold text-xs hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg"
+                      className="bg-[#00CDD0] text-white px-5 py-2 rounded-full font-semibold text-base hover:bg-[#00B0B3] transition-colors duration-200 shadow-lg" // Botón más grande
                     >
                       Únete
                     </button>
