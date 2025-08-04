@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import UnitCoreLogo from '../UnitCore.svg'; // Asegúrate de que UnitCore.svg esté en src/
-
-// Importa el cliente de Supabase centralizado
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
