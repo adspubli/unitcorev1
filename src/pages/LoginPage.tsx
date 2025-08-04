@@ -3,15 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import UnitCoreLogo from '../UnitCore.svg'; // Asegúrate de que UnitCore.svg esté en src/
 
-// Importa Supabase
-import { createClient } from '@supabase/supabase-js';
-
-// --- CONFIGURACIÓN DE SUPABASE ---
-const supabaseUrl = 'https://ofkkjjdtorwsggozrmzn.supabase.co'; // Tu URL de proyecto de Supabase
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ma2tqamR0b3J3c2dnb3pybXpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjkyNjgsImV4cCI6MjA2OTQwNTI2OH0.tmKc7L71Dd7J2bfJMR6iXg_omp0U6k6_va_4_nuA_nY'; // Tu clave anon de Supabase
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-// --- FIN CONFIGURACIÓN DE SUPABASE ---
+// Importa el cliente de Supabase centralizado
+import { supabase } from '../lib/supabaseClient';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
