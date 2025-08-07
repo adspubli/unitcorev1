@@ -4,21 +4,16 @@ import {
   Grid3X3, 
   Search, 
   MessageCircle, 
-  ChevronRight, 
   Plus,
-  User,
-  CreditCard,
-  Settings,
-  LogOut,
   Edit3,
   Save,
   X,
-  Camera
+  Camera,
+  ArrowLeft
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState('personal');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -72,27 +67,6 @@ const ProfilePage = () => {
 
     loadUserData();
   }, []);
-
-  const menuItems = [
-    {
-      id: 'personal',
-      title: 'Información personal',
-      icon: User,
-      color: 'bg-[#10B981]'
-    },
-    {
-      id: 'payment',
-      title: 'Medios de pago',
-      icon: CreditCard,
-      color: 'bg-[#3B4A6B]'
-    },
-    {
-      id: 'splitit',
-      title: 'Splitit+',
-      icon: Plus,
-      color: 'bg-[#3B4A6B]'
-    }
-  ];
 
   const handleInputChange = (field: string, value: string) => {
     setEditableData(prev => ({
@@ -169,73 +143,22 @@ const ProfilePage = () => {
     }
   };
 
-  const profileFields = [
-    {
-      label: 'Nombre',
-      field: 'firstName',
-      value: editableData.firstName,
-      placeholder: 'Ingresa tu nombre',
-      type: 'text'
-    },
-    {
-      label: 'Apellido',
-      field: 'lastName',
-      value: editableData.lastName,
-      placeholder: 'Ingresa tu apellido',
-      type: 'text'
-    },
-    {
-      label: 'Seudónimo',
-      field: 'nickname',
-      value: editableData.nickname,
-      placeholder: 'Agrega tu seudónimo',
-      type: 'text'
-    },
-    {
-      label: 'Fecha de nacimiento',
-      field: 'birthDate',
-      value: editableData.birthDate,
-      placeholder: 'DD/MM/AAAA',
-      type: 'date'
-    },
-    {
-      label: 'Género',
-      field: 'gender',
-      value: editableData.gender,
-      placeholder: 'Selecciona tu género',
-      type: 'select',
-      options: ['Masculino', 'Femenino', 'Otro', 'Prefiero no decir']
-    }
-  ];
-
-  const contactFields = [
-    {
-      label: 'Dirección de correo electrónico',
-      field: 'email',
-      value: profileData.email,
-      placeholder: 'tu@email.com',
-      type: 'email',
-      disabled: true // El email no se puede cambiar
-    },
-    {
-      label: 'Teléfono',
-      field: 'phone',
-      value: editableData.phone,
-      placeholder: '+1 234 567 8900',
-      type: 'tel'
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-[#F7F9F8]">
       {/* Top Navigation */}
       <nav className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
-              Splitit
-            </Link>
+            {/* Back Button and Title */}
+            <div className="flex items-center">
+              <Link 
+                to="/dashboard"
+                className="p-2 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-200 mr-4"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Link>
+              <h1 className="text-xl font-semibold text-[#0A0A0A]">Mi perfil</h1>
+            </div>
 
             {/* Navigation Icons */}
             <div className="flex items-center space-x-6">
@@ -272,246 +195,251 @@ const ProfilePage = () => {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Sidebar */}
-          <div className="lg:w-1/3">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-              {/* Profile Header */}
-              <div className="p-6 text-center border-b border-gray-100">
-                <h1 className="text-2xl font-bold text-[#0A0A0A] mb-2">Mi cuenta</h1>
-                <button 
-                  onClick={handleLogout}
-                  disabled={loading}
-                  className="text-[#4A4A4A] hover:text-[#0A0A0A] px-4 py-2 border border-[#E5E7EB] rounded-full text-sm font-medium transition-colors duration-200"
-                >
-                  {loading ? 'Cerrando...' : 'Cerrar sesión'}
-                </button>
-                {error && (
-                  <p className="text-red-500 text-sm mt-2">{error}</p>
-                )}
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Profile Card */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          {/* Profile Header */}
+          <div className="px-8 py-6 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-6">
+                {/* Profile Picture */}
+                <div className="relative">
+                  <img
+                    src={profileData.avatar}
+                    alt="Profile"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+                  />
+                  <button className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#0A0A0A] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-800 transition-colors duration-200 shadow-lg">
+                    <Camera className="w-4 h-4 text-white" />
+                  </button>
+                </div>
+
+                {/* Profile Info */}
+                <div>
+                  <h2 className="text-2xl font-bold text-[#0A0A0A] mb-1">
+                    {profileData.name}
+                  </h2>
+                  <p className="text-[#4A4A4A] text-sm mb-2">
+                    {profileData.email}
+                  </p>
+                  <div className="flex items-center space-x-4 text-sm text-[#4A4A4A]">
+                    <span>🌟 Miembro verificado</span>
+                    <span>📅 Miembro desde enero 2024</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Menu Items */}
-              <div className="p-2">
-                {menuItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl text-left transition-all duration-200 mb-1 ${
-                      activeTab === item.id
-                        ? 'bg-[#10B981] text-white'
-                        : 'text-[#4A4A4A] hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <div className={`w-2 h-2 rounded-full mr-3 ${
-                        activeTab === item.id ? 'bg-white' : item.color
-                      }`}></div>
-                      <span className="font-medium">{item.title}</span>
-                    </div>
-                    <ChevronRight className={`w-5 h-5 ${
-                      activeTab === item.id ? 'text-white' : 'text-[#9CA3AF]'
-                    }`} />
-                  </button>
-                ))}
+              {/* Action Buttons */}
+              <div className="flex items-center space-x-3">
+                {!isEditing ? (
+                  <>
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="flex items-center px-4 py-2 bg-[#059669] text-white rounded-xl hover:bg-[#10B981] transition-colors duration-200"
+                    >
+                      <Edit3 className="w-4 h-4 mr-2" />
+                      Editar perfil
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      disabled={loading}
+                      className="px-4 py-2 border border-[#E5E7EB] text-[#4A4A4A] rounded-xl hover:border-[#0A0A0A] hover:text-[#0A0A0A] transition-colors duration-200"
+                    >
+                      {loading ? 'Cerrando...' : 'Cerrar sesión'}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={handleSaveChanges}
+                      disabled={loading}
+                      className="flex items-center px-4 py-2 bg-[#059669] text-white rounded-xl hover:bg-[#10B981] transition-colors duration-200 disabled:opacity-50"
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      {loading ? 'Guardando...' : 'Guardar cambios'}
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className="flex items-center px-4 py-2 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
+                    >
+                      <X className="w-4 h-4 mr-2" />
+                      Cancelar
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Right Content */}
-          <div className="lg:w-2/3">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-              {activeTab === 'personal' && (
-                <div>
-                  {/* Messages */}
-                  {successMessage && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-6">
-                      <strong className="font-bold">¡Éxito! </strong>
-                      <span>{successMessage}</span>
-                    </div>
-                  )}
-                  
-                  {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-6">
-                      <strong className="font-bold">Error: </strong>
-                      <span>{error}</span>
-                    </div>
-                  )}
+          {/* Messages */}
+          {successMessage && (
+            <div className="mx-8 mt-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl">
+              <strong className="font-bold">¡Éxito! </strong>
+              <span>{successMessage}</span>
+            </div>
+          )}
+          
+          {error && (
+            <div className="mx-8 mt-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl">
+              <strong className="font-bold">Error: </strong>
+              <span>{error}</span>
+            </div>
+          )}
 
-                  {/* Profile Section */}
-                  <div className="mb-8">
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-bold text-[#0A0A0A]">Perfil</h2>
-                      <div className="flex items-center space-x-2">
-                        {!isEditing ? (
-                          <button
-                            onClick={() => setIsEditing(true)}
-                            className="flex items-center px-4 py-2 bg-[#059669] text-white rounded-xl hover:bg-[#10B981] transition-colors duration-200"
-                          >
-                            <Edit3 className="w-4 h-4 mr-2" />
-                            Editar
-                          </button>
-                        ) : (
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={handleSaveChanges}
-                              disabled={loading}
-                              className="flex items-center px-4 py-2 bg-[#059669] text-white rounded-xl hover:bg-[#10B981] transition-colors duration-200 disabled:opacity-50"
-                            >
-                              <Save className="w-4 h-4 mr-2" />
-                              {loading ? 'Guardando...' : 'Guardar'}
-                            </button>
-                            <button
-                              onClick={handleCancelEdit}
-                              className="flex items-center px-4 py-2 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
-                            >
-                              <X className="w-4 h-4 mr-2" />
-                              Cancelar
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center mb-6">
-                      <div className="relative mr-6">
-                        <img
-                          src={profileData.avatar}
-                          alt="Profile"
-                          className="w-20 h-20 rounded-full object-cover border-4 border-[#E5E7EB]"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#0A0A0A] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-800 transition-colors duration-200">
-                          <Camera className="w-3 h-3 text-white" />
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-sm text-[#4A4A4A] mb-1">
-                          La foto de perfil tranquiliza a otros usuarios de un grupo.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Profile Fields */}
-                    <div className="space-y-4">
-                      {profileFields.map((field, index) => (
-                        <div key={index} className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0">
-                          <div className="flex-1">
-                            <label className="block text-sm text-[#4A4A4A] mb-1">
-                              {field.label}
-                            </label>
-                            {isEditing ? (
-                              field.type === 'select' ? (
-                                <select
-                                  value={field.value}
-                                  onChange={(e) => handleInputChange(field.field, e.target.value)}
-                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
-                                >
-                                  {field.options?.map((option) => (
-                                    <option key={option} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              ) : (
-                                <input
-                                  type={field.type}
-                                  value={field.value}
-                                  onChange={(e) => handleInputChange(field.field, e.target.value)}
-                                  placeholder={field.placeholder}
-                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
-                                />
-                              )
-                            ) : (
-                              <div className="text-[#0A0A0A] font-medium">
-                                {field.value || field.placeholder}
-                              </div>
-                            )}
-                          </div>
-                          {!isEditing && (
-                            <ChevronRight className="w-5 h-5 text-[#9CA3AF] ml-4" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+          {/* Profile Form */}
+          <div className="px-8 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Nombre */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Nombre
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editableData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                    placeholder="Ingresa tu nombre"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.firstName || 'No especificado'}
                   </div>
+                )}
+              </div>
 
-                  {/* Contact Information */}
-                  <div>
-                    <h3 className="text-lg font-bold text-[#0A0A0A] mb-6">
-                      Información de contacto
-                    </h3>
-                    
-                    <div className="space-y-4">
-                      {contactFields.map((field, index) => (
-                        <div key={index} className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0">
-                          <div className="flex-1">
-                            <label className="block text-sm text-[#4A4A4A] mb-1">
-                              {field.label}
-                            </label>
-                            {isEditing && !field.disabled ? (
-                              <input
-                                type={field.type}
-                                value={field.value}
-                                onChange={(e) => handleInputChange(field.field, e.target.value)}
-                                placeholder={field.placeholder}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
-                              />
-                            ) : (
-                              <div className={`font-medium ${
-                                field.value && !field.value.includes('Agrega') ? 'text-[#0A0A0A]' : 'text-[#4A4A4A]'
-                              }`}>
-                                {field.value || field.placeholder}
-                              </div>
-                            )}
-                          </div>
-                          {!isEditing && (
-                            <ChevronRight className="w-5 h-5 text-[#9CA3AF] ml-4" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+              {/* Apellido */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Apellido
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editableData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                    placeholder="Ingresa tu apellido"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.lastName || 'No especificado'}
                   </div>
+                )}
+              </div>
+
+              {/* Seudónimo */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Seudónimo
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editableData.nickname}
+                    onChange={(e) => handleInputChange('nickname', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                    placeholder="Agrega tu seudónimo"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.nickname || 'No especificado'}
+                  </div>
+                )}
+              </div>
+
+              {/* Email (no editable) */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Correo electrónico
+                </label>
+                <div className="w-full px-4 py-3 bg-gray-100 rounded-xl text-[#4A4A4A] font-medium">
+                  {profileData.email}
                 </div>
-              )}
+              </div>
 
-              {activeTab === 'payment' && (
-                <div>
-                  <h2 className="text-xl font-bold text-[#0A0A0A] mb-6">Medios de pago</h2>
-                  <div className="text-center py-12">
-                    <CreditCard className="w-16 h-16 text-[#9CA3AF] mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-[#4A4A4A] mb-2">
-                      No tienes medios de pago agregados
-                    </h3>
-                    <p className="text-[#9CA3AF] mb-6">
-                      Agrega una tarjeta de crédito o débito para realizar pagos
-                    </p>
-                    <button className="bg-[#0A0A0A] text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200">
-                      Agregar método de pago
-                    </button>
+              {/* Teléfono */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Teléfono
+                </label>
+                {isEditing ? (
+                  <input
+                    type="tel"
+                    value={editableData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                    placeholder="+1 234 567 8900"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.phone || 'No especificado'}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
-              {activeTab === 'splitit' && (
-                <div>
-                  <h2 className="text-xl font-bold text-[#0A0A0A] mb-6">Splitit+</h2>
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#059669] to-[#10B981] rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Plus className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-lg font-medium text-[#4A4A4A] mb-2">
-                      Descubre Splitit+
-                    </h3>
-                    <p className="text-[#9CA3AF] mb-6">
-                      Accede a beneficios exclusivos y funciones premium
-                    </p>
-                    <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]">
-                      Conocer más
-                    </button>
+              {/* Fecha de nacimiento */}
+              <div>
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Fecha de nacimiento
+                </label>
+                {isEditing ? (
+                  <input
+                    type="date"
+                    value={editableData.birthDate}
+                    onChange={(e) => handleInputChange('birthDate', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                  />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.birthDate ? new Date(editableData.birthDate).toLocaleDateString('es-ES') : 'No especificado'}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+
+              {/* Género */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-[#0A0A0A] mb-2">
+                  Género
+                </label>
+                {isEditing ? (
+                  <select
+                    value={editableData.gender}
+                    onChange={(e) => handleInputChange('gender', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent"
+                  >
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                    <option value="Prefiero no decir">Prefiero no decir</option>
+                  </select>
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
+                    {editableData.gender}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Stats */}
+          <div className="px-8 py-6 bg-gray-50 border-t border-gray-100">
+            <h3 className="text-lg font-semibold text-[#0A0A0A] mb-4">Estadísticas del perfil</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-white rounded-xl">
+                <div className="text-2xl font-bold text-[#059669] mb-1">5</div>
+                <div className="text-sm text-[#4A4A4A]">Suscripciones activas</div>
+              </div>
+              <div className="text-center p-4 bg-white rounded-xl">
+                <div className="text-2xl font-bold text-[#059669] mb-1">€127</div>
+                <div className="text-sm text-[#4A4A4A]">Ahorrado este mes</div>
+              </div>
+              <div className="text-center p-4 bg-white rounded-xl">
+                <div className="text-2xl font-bold text-[#059669] mb-1">4.9</div>
+                <div className="text-sm text-[#4A4A4A]">Calificación promedio</div>
+              </div>
             </div>
           </div>
         </div>
