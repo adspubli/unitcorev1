@@ -17,7 +17,7 @@ const Hero = () => {
           Comparte el precio de
           <br />
           <span className="bg-gradient-to-r from-[#059669] to-[#10B981] bg-clip-text text-transparent">
-            tus suscripciones hoy misom nota
+            tus suscripciones
           </span>
         </h1>
 
