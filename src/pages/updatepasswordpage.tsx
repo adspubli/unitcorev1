@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import UnitCoreLogo from '../UnitCore.svg'; // Asegúrate de que UnitCore.svg esté en src/
 
-// --- CONFIGURACIÓN DE SUPABASE ---
-// Asegúrate de que estos valores sean los mismos que en LoginPage y RegisterPage
-const supabaseUrl = 'https://ofkkjjdtorwsggozrmzn.supabase.co'; 
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ma2tqamR0b3J3c2dnb3pybXpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjkyNjgsImV4cCI6MjA2OTQwNTI2OH0.tmKc7L71Dd7J2bfJMR6iXg_omp0U6k6_va_4_nuA_nY'; 
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-// --- FIN CONFIGURACIÓN DE SUPABASE ---
+// ...existing code...
 
 const UpdatePasswordPage = () => {
   const [password, setPassword] = useState('');
