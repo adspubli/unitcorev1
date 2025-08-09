@@ -9,15 +9,9 @@ import ExplorePage from './pages/ExplorePage';
 import CreateGroupPage from './pages/CreateGroupPage';
 import GroupDetailsPage from './pages/GroupDetailsPage';
 import UpdatePasswordPage from './pages/updatepasswordpage'; // ¡Aquí está el cambio!
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './lib/supabase';
 
-// --- CONFIGURACIÓN DE SUPABASE ---
-// Asegúrate de que estos valores sean los mismos que en LoginPage y RegisterPage
-const supabaseUrl = 'https://ofkkjjdtorwsggozrmzn.supabase.co'; 
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ma2tqamR0b3J3c2dnb3pybXpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjkyNjgsImV4cCI6MjA2OTQwNTI2OH0.tmKc7L71Dd7J2bfJMR6iXg_omp0U6k6_va_4_nuA_nY'; 
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-// --- FIN CONFIGURACIÓN DE SUPABASE ---
+// ...existing code...
 
 // Nuevo componente para manejar la lógica de autenticación global y redirecciones
 const AuthInitializer = () => {
