@@ -30,20 +30,26 @@ const LoginPage = () => {
     setMessage(null); // Limpia mensajes al intentar login
 
     try {
+      console.log('[Login Debug] Intentando signInWithPassword con email:', formData.email);
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
       });
+      console.log('[Login Debug] Resultado signInWithPassword:', { data, error });
 
       if (error) {
-        setError(error.message);
+        // Mostrar más detalles si existen
+        // @ts-ignore
+        const errorCode = error.status || error.code;
+        setError(`${error.message}${errorCode ? ' (code: ' + errorCode + ')' : ''}`);
+        console.warn('[Login Debug] Detalle error:', error);
       } else if (data.user) {
         console.log('Login exitoso:', data.user);
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.message || 'Ocurrió un error inesperado durante el inicio de sesión.');
-      console.error('Error de login:', err);
+  setError(err.message || 'Ocurrió un error inesperado durante el inicio de sesión.');
+  console.error('[Login Debug] Excepción capturada:', err);
     } finally {
       setLoading(false);
     }

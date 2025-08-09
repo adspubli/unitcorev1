@@ -1,7 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
+// Debug log (se puede quitar luego)
+// Mostramos si las variables están presentes para diagnosticar el error supabaseUrl is required
+if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+  console.warn('[Supabase Debug] Variables de entorno faltantes:', {
+    VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+    VITE_SUPABASE_ANON_KEY_PRESENT: !!import.meta.env.VITE_SUPABASE_ANON_KEY
+  });
+}
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim() || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim() || '';
+
+if (!supabaseUrl) {
+  console.error('[Supabase Debug] supabaseUrl vacío después de leer .env');
+}
+if (!supabaseAnonKey) {
+  console.error('[Supabase Debug] supabaseAnonKey vacío después de leer .env');
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
