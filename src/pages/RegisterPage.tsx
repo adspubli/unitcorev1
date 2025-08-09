@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
-import { Eye, EyeOff, ArrowLeft, Check } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import UnitCoreLogo from '../UnitCore.svg'; // Asegúrate de que UnitCore.svg esté en src/
 
 // Importa Supabase
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 
-// --- CONFIGURACIÓN DE SUPABASE ---
-// ¡IMPORTANTE! Reemplaza estos valores con la URL y la clave anon de tu proyecto Supabase
-const supabaseUrl = 'https://ofkkjjdtorwsggozrmzn.supabase.co'; // Tu URL de proyecto de Supabase
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ma2tqamR0b3J3c2dnb3pybXpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjkyNjgsImV4cCI6MjA2OTQwNTI2OH0.tmKc7L71Dd7J2bfJMR6iXg_omp0U6k6_va_4_nuA_nY'; 
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-// --- FIN CONFIGURACIÓN DE SUPABASE ---
+// ...existing code...
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +22,7 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false); // Estado para el indicador de carga
   const [error, setError] = useState<string | null>(null); // Estado para mensajes de error
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // Estado para mensaje de éxito
-  const navigate = useNavigate(); // Hook para la navegación programática
+  // const navigate = useNavigate(); // Hook para la navegación programática (no usado)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
