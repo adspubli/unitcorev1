@@ -81,27 +81,30 @@ export type Database = {
           created_at?: string;
         };
       };
-      group_members: {
+      group_memberships: {
         Row: {
           id: string;
-          group_id: string;
           user_id: string;
-          status: 'pending' | 'active' | 'inactive';
+          group_id: string;
+          status: string;
           joined_at: string;
+          payment_status: string;
         };
         Insert: {
           id?: string;
-          group_id: string;
           user_id: string;
-          status?: 'pending' | 'active' | 'inactive';
+          group_id: string;
+          status?: string;
           joined_at?: string;
+          payment_status?: string;
         };
         Update: {
           id?: string;
-          group_id?: string;
           user_id?: string;
-          status?: 'pending' | 'active' | 'inactive';
+          group_id?: string;
+          status?: string;
           joined_at?: string;
+          payment_status?: string;
         };
       };
     };
