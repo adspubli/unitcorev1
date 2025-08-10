@@ -10,7 +10,7 @@ import DashboardPage from './pages/DashboardPage';
 import ExplorePage from './pages/ExplorePage';
 import CreateGroupPage from './pages/CreateGroupPage';
 import GroupDetailsPage from './pages/GroupDetailsPage';
-import UpdatePasswordPage from './pages/updatepasswordpage'; // ¡Aquí está el cambio!
+import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import { supabase } from './lib/supabase';
 
 // ...existing code...
