@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-import SelectNetflixPlanPage from './pages/SelectNetflixPlanPage';
+import SelectPlanPage from './pages/SelectPlanPage';
 
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
@@ -88,7 +88,7 @@ function App() {
           <Route path="/create-group" element={<CreateGroupPage />} />
           <Route path="/group/:id" element={<GroupDetailsPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
-          <Route path="/select-netflix-plan" element={<SelectNetflixPlanPage />} />
+          <Route path="/select-plan/:serviceId" element={<SelectPlanPage />} />
         </Routes>
       </div>
     </Router>
