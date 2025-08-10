@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+
+import SelectNetflixPlanPage from './pages/SelectNetflixPlanPage';
 
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
@@ -12,6 +13,8 @@ import CreateGroupPage from './pages/CreateGroupPage';
 import GroupDetailsPage from './pages/GroupDetailsPage';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import { supabase } from './lib/supabase';
+
+import LandingPage from './pages/LandingPage';
 
 // ...existing code...
 
@@ -85,6 +88,7 @@ function App() {
           <Route path="/create-group" element={<CreateGroupPage />} />
           <Route path="/group/:id" element={<GroupDetailsPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
+          <Route path="/select-netflix-plan" element={<SelectNetflixPlanPage />} />
         </Routes>
       </div>
     </Router>

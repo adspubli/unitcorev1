@@ -93,21 +93,27 @@ const CreateGroupPage = () => {
         <div className="mb-10">
           {filteredServices.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredServices.map((service) => (
-                <Link
-                  key={service.id}
-                  to={`/create-group/configure?service=${service.id}`}
-                  className="flex flex-col items-center p-7 bg-white rounded-2xl border-2 border-[#E5E7EB] hover:border-[#059669] transition-all duration-200 group shadow-sm hover:shadow-lg cursor-pointer"
-                  style={{ minHeight: 180 }}
-                >
-                  <div className={`w-14 h-14 ${service.color} rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
-                    <span className="text-white text-2xl">{service.icon}</span>
-                  </div>
-                  <span className="font-semibold text-[#222] group-hover:text-[#059669] text-center text-base">
-                    {service.name}
-                  </span>
-                </Link>
-              ))}
+              {filteredServices.map((service) => {
+                const isNetflix = service.id === 'netflix';
+                const linkTo = isNetflix
+                  ? '/select-netflix-plan'
+                  : `/create-group/configure?service=${service.id}`;
+                return (
+                  <Link
+                    key={service.id}
+                    to={linkTo}
+                    className="flex flex-col items-center p-7 bg-white rounded-2xl border-2 border-[#E5E7EB] hover:border-[#059669] transition-all duration-200 group shadow-sm hover:shadow-lg cursor-pointer"
+                    style={{ minHeight: 180 }}
+                  >
+                    <div className={`w-14 h-14 ${service.color} rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+                      <span className="text-white text-2xl">{service.icon}</span>
+                    </div>
+                    <span className="font-semibold text-[#222] group-hover:text-[#059669] text-center text-base">
+                      {service.name}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-12">
