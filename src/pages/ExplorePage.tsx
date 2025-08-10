@@ -1,16 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ExploreNavbarWrapper from './ExploreNavbarWrapper';
-import {
-  Search,
-  Grid3X3,
-  MessageCircle,
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  Award, // Para "Índice de confianza"
-  Clock // Para "Tiempo de respuesta"
-} from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const ExplorePage = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
