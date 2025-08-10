@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   Edit3,
   Save,
   X,
-  Camera,
-  ArrowLeft
+  Camera
 } from 'lucide-react';
 import NavbarProfile from '../components/NavbarProfile';
 import { supabase } from '../lib/supabase';
