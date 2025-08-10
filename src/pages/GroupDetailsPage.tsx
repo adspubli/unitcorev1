@@ -1,3 +1,4 @@
+import MobileNavbarProfile from '../components/MobileNavbarProfile';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
@@ -406,7 +407,9 @@ const GroupDetailsPage = () => {
         </div>
       )}
       {/* Barra de navegación inferior para móviles */}
-    </div>
+    {/* Barra de navegación inferior para móviles */}
+    <MobileNavbarProfile />
+  </div>
   );
 };
 
