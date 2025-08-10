@@ -42,7 +42,7 @@ const Hero = () => {
           </Link>
           <Link 
             to="/login"
-            className="border border-[#E5E7EB] text-[#4A4A4A] px-8 py-3 rounded-full text-lg font-semibold hover:border-[#0A0A0A] hover:text-[#0A0A0A] transition-all duration-200 transform hover:scale-[1.02]"
+            className="text-[#4A4A4A] px-8 py-3 rounded-full text-lg font-semibold transition-all duration-200 transform hover:scale-[1.02] hover:text-[#0A0A0A]"
           >
             Iniciar sesión
           </Link>
