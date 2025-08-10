@@ -35,7 +35,7 @@ const AppNavigation = ({ profileData }: { profileData: ProfileData }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo de la aplicación */}
           <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
-            Splitit
+            UnitCore
           </Link>
 
           {/* Iconos de Navegación y Botón CTA - Visible solo en escritorio (md:flex) */}

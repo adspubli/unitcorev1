@@ -27,7 +27,7 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
                 onClick={handleLogoClick}
                 className="text-2xl font-bold text-[#0A0A0A] tracking-tight cursor-pointer"
               >
-                Splitit
+                UnitCore
               </a>
             </div>
 

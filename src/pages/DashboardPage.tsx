@@ -34,13 +34,13 @@ const DashboardPage = () => {
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Suscripción</h1>
         </div>
 
-        {/* Splitit+ Banner */}
+  {/* UnitCore+ Banner */}
         <div className="bg-gradient-to-r from-[#059669] to-[#10B981] rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Splitit+</h2>
-                <p className="text-lg opacity-90 mb-4">Todo Splitit sin coste alguno, y mucho más...</p>
+                <h2 className="text-2xl font-bold mb-2">UnitCore+</h2>
+                <p className="text-lg opacity-90 mb-4">Todo UnitCore sin coste alguno, y mucho más...</p>
               </div>
               <div className="hidden md:block">
                 <div className="relative flex items-center justify-center">
@@ -55,7 +55,7 @@ const DashboardPage = () => {
               </div>
             </div>
             <button className="bg-white text-[#059669] px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors duration-200">
-              Descubre Splitit+
+              Descubre UnitCore+
             </button>
           </div>
           <div className="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
