@@ -23,7 +23,7 @@ const MobileNavbarProfile: React.FC = () => {
             onClick={() => setShowActionModal(true)}
             aria-label="Compartir"
           >
-            <div className="w-16 h-16 bg-[#FB3C67] rounded-full flex items-center justify-center mb-1 shadow-lg border-4 border-white">
+            <div className="w-16 h-16 bg-[#FB3C67] rounded-full flex items-center justify-center mb-1 shadow-lg">
               <Plus className="w-10 h-10 text-white stroke-2" />
             </div>
             <span className="text-xs text-[#FB3C67] font-semibold">Crear</span>
