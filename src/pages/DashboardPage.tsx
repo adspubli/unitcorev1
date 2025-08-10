@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
-import { Plus, X } from 'lucide-react';
-import MobileNavbar from '../components/MobileNavbar';
+import { Plus } from 'lucide-react';
+import NavbarProfile from '../components/NavbarProfile';
 
 const DashboardPage = () => {
-  const [showActionModal, setShowActionModal] = useState(false);
-
-  const profileData = {
-    name: 'Yonathan Montilla',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'
-  };
+  // Avatar por defecto para NavbarProfile
+  const avatarUrl = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face';
 
   return (
-    <div className="min-h-screen bg-[#F7F9F8]">
-      {/* Mobile Optimized Navigation */}
-      <MobileNavbar 
-        profileData={profileData}
-        onCreateGroup={() => setShowActionModal(true)}
-      />
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+    <div className="min-h-screen bg-[#F7F9F8]">
+      {/* Menú de navegación reutilizable */}
+      <NavbarProfile avatarUrl={avatarUrl} />
+
+  {/* Main Content */}
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
         {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Suscripción</h1>
@@ -57,64 +51,16 @@ const DashboardPage = () => {
           </div>
           <h3 className="text-xl font-bold text-[#0A0A0A] mb-2">Agregar una suscripción</h3>
           <p className="text-[#4A4A4A] mb-6 text-sm md:text-base">Comparte tus suscripciones o únete a grupos existentes</p>
-          <button 
-            onClick={() => setShowActionModal(true)}
+          <Link
+            to="/create-group"
             className="bg-[#0A0A0A] text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200 text-sm md:text-base"
           >
             Comenzar
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* Action Modal */}
-      {showActionModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full relative mx-4">
-            <button
-              onClick={() => setShowActionModal(false)}
-              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 text-[#9CA3AF] hover:text-[#4A4A4A] transition-colors duration-200 rounded-lg"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <div className="text-center mb-8">
-              <h2 className="text-xl md:text-2xl font-bold text-[#0A0A0A] mb-4">¿Qué quieres hacer?</h2>
-            </div>
-
-            <div className="space-y-4">
-              <Link
-                to="/create-group"
-                onClick={() => setShowActionModal(false)}
-                className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
-              >
-                <div className="text-center">
-                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Compartir</h3>
-                  <p className="text-xs md:text-sm text-[#4A4A4A]">
-                    Soy el/la propietario(a) de una suscripción y quiero compartirla.
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                to="/explore"
-                onClick={() => setShowActionModal(false)}
-                className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
-              >
-                <div className="text-center">
-                  <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Suscribir</h3>
-                  <p className="text-xs md:text-sm text-[#4A4A4A]">
-                    Quiero suscribirme a una suscripción.
-                  </p>
-                </div>
-              </Link>
-            </div>
-
-            <div className="mt-6 text-center">
-              <p className="text-xs md:text-sm text-[#FF6B9D] font-medium">¡Fácil!</p>
-            </div>
-          </div>
-        </div>
-      )}
+  {/* Action Modal eliminado, ahora el popup está en NavbarProfile */}
     </div>
   );
 };

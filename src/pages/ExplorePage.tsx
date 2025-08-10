@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ExploreNavbarWrapper from './ExploreNavbarWrapper';
 import {
   Search,
   Grid3X3,
@@ -157,55 +158,7 @@ const ExplorePage = () => {
   }, {} as { [key: string]: any[] });
 
   return (
-    <div className="min-h-screen bg-[#F1F3F8] font-inter text-[#131313]"> {/* Fondo gris claro */}
-      {/* Top Navigation */}
-      <nav className="bg-white border-b border-[#EDF1F4] py-4 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="text-3xl font-extrabold text-[#131313] tracking-tight">
-              Splitit
-            </Link>
-
-            {/* Navigation Icons */}
-            <div className="flex items-center space-x-6">
-              <Link to="/dashboard" className="p-2 text-[#131313] hover:text-[#00CDD0] transition-colors duration-200">
-                <Grid3X3 className="w-6 h-6" />
-                <span className="sr-only">Inicio</span>
-              </Link>
-              <Link to="/explore" className="p-2 text-[#00CDD0] transition-colors duration-200">
-                <Search className="w-6 h-6" />
-                <span className="sr-only">Explorar</span>
-              </Link>
-              <button className="p-2 text-[#131313] hover:text-[#00CDD0] transition-colors duration-200">
-                <MessageCircle className="w-6 h-6" />
-                <span className="sr-only">Mensajes</span>
-              </button>
-
-              {/* CTA Button */}
-              <Link
-                to="/create-group"
-                className="bg-[#00CDD0] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#00B0B3] transition-all duration-200 transform hover:scale-[1.02] flex items-center shadow-lg"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Compartir una suscripción
-              </Link>
-
-              {/* Profile Avatar */}
-              <Link to="/profile" className="relative">
-                <img
-                  src={profileData.avatar}
-                  alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover border-2 border-[#00CDD0] shadow-md"
-                />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#00D08C] rounded-full border-2 border-white"></div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
+    <ExploreNavbarWrapper avatarUrl={profileData.avatar}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search Bar */}
         <div className="relative mb-8">
@@ -292,7 +245,7 @@ const ExplorePage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </ExploreNavbarWrapper>
   );
 };
 

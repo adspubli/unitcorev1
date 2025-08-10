@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Home,
-  Search,
-  MessageCircle,
-  User,
   Edit3,
   Save,
   X,
   Camera,
-  ArrowLeft,
-  Bell
+  ArrowLeft
 } from 'lucide-react';
+import NavbarProfile from '../components/NavbarProfile';
 import { supabase } from '../lib/supabase';
 
 const ProfilePage = () => {
@@ -24,7 +20,7 @@ const ProfilePage = () => {
 
   // Estados para los campos editables
   const [editableData, setEditableData] = useState({
-    firstName: '',
+    firstName: 'Tu nombre',
     lastName: '',
     nickname: '',
     birthDate: '',
@@ -82,6 +78,7 @@ const ProfilePage = () => {
     setSuccessMessage(null);
 
     try {
+      // Actualizar metadatos de usuario en Auth
       const { data, error } = await supabase.auth.updateUser({
         data: {
           first_name: editableData.firstName,
@@ -96,10 +93,23 @@ const ProfilePage = () => {
       if (error) {
         setError(error.message);
       } else {
+        // También guardar el teléfono en la tabla profiles
+        if (data.user) {
+          const { error: dbError } = await supabase
+            .from('profiles')
+            .upsert({
+              user_id: data.user.id,
+              phone: editableData.phone,
+              last_name: editableData.lastName
+            }, { onConflict: 'user_id' });
+          if (dbError) {
+            setError('Perfil en Auth actualizado, pero error en base de datos: ' + dbError.message);
+            return;
+          }
+        }
         setSuccessMessage('¡Perfil actualizado exitosamente!');
         setIsEditing(false);
         setUser(data.user);
-        // Limpiar mensaje después de 3 segundos
         setTimeout(() => setSuccessMessage(null), 3000);
       }
     } catch (err: any) {
@@ -146,110 +156,11 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-[#F7F9F8]">
-      {/* Top Navigation - Figma Design */}
-      <nav className="bg-white border-b border-[#E5E7EB] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Left Side - Logo */}
-            <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
-                Splitit
-              </Link>
-            </div>
-
-            {/* Center - Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-[#9CA3AF]" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Buscar servicios..."
-                  className="block w-full pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-full bg-[#F9FAFB] text-sm placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#059669] focus:border-transparent transition-all duration-200"
-                />
-              </div>
-            </div>
-
-            {/* Right Side - Navigation Icons */}
-            <div className="flex items-center space-x-6">
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-4">
-                <Link to="/dashboard" className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
-                  <Home className="w-6 h-6" />
-                  <span className="sr-only">Inicio</span>
-                </Link>
-                <Link to="/explore" className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
-                  <Search className="w-6 h-6" />
-                  <span className="sr-only">Explorar</span>
-                </Link>
-                <button className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
-                  <MessageCircle className="w-6 h-6" />
-                  <span className="sr-only">Mensajes</span>
-                </button>
-                <button className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg relative">
-                  <Bell className="w-6 h-6" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#EF4444] rounded-full"></span>
-                  <span className="sr-only">Notificaciones</span>
-                </button>
-              </div>
-
-              {/* CTA Button */}
-              <Link
-                to="/create-group"
-                className="hidden md:flex bg-[#059669] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#10B981] transition-all duration-200 transform hover:scale-[1.02] items-center"
-              >
-                Crear grupo
-              </Link>
-
-              {/* Profile Avatar - Active State */}
-              <Link to="/profile" className="relative">
-                <div className="w-10 h-10 rounded-full border-2 border-[#059669] p-0.5">
-                  <img
-                    src={profileData.avatar}
-                    alt="Profile"
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#10B981] rounded-full border-2 border-white"></div>
-                <span className="sr-only">Inicio</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Bottom Navigation */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#E5E7EB] z-50">
-          <div className="grid grid-cols-5 h-16">
-            <Link to="/dashboard" className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200">
-              <Home className="w-6 h-6" />
-              <span className="text-xs mt-1">Inicio</span>
-            </Link>
-            <Link to="/explore" className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200">
-              <Search className="w-6 h-6" />
-              <span className="text-xs mt-1">Buscar</span>
-            </Link>
-            <Link to="/create-group" className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200">
-              <div className="w-8 h-8 bg-[#059669] rounded-full flex items-center justify-center mb-1">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
-              </div>
-              <span className="text-xs">Crear</span>
-            </Link>
-            <button className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200 relative">
-              <MessageCircle className="w-6 h-6" />
-              <span className="text-xs mt-1">Mensajes</span>
-            </button>
-            <Link to="/profile" className="flex flex-col items-center justify-center text-[#059669] transition-colors duration-200">
-              <User className="w-6 h-6" />
-              <span className="text-xs mt-1">Perfil</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <NavbarProfile avatarUrl={profileData.avatar} />
 
       {/* Breadcrumb */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center text-sm text-[#6B7280]">
+        <div className="flex flex-wrap items-center text-sm text-[#6B7280]">
           <Link to="/dashboard" className="hover:text-[#059669] transition-colors duration-200">
             Inicio
           </Link>
@@ -259,14 +170,14 @@ const ProfilePage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 md:pb-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 pb-24 md:pb-8">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {/* Profile Header */}
-          <div className="px-8 py-6 border-b border-gray-100">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-6">
+          <div className="px-4 sm:px-6 md:px-8 py-6 border-b border-gray-100">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
+              <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                 {/* Profile Picture */}
-                <div className="relative">
+                <div className="relative mb-2 sm:mb-0">
                   <img
                     src={profileData.avatar}
                     alt="Profile"
@@ -278,22 +189,22 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Profile Info */}
-                <div>
-                  <h2 className="text-2xl font-bold text-[#0A0A0A] mb-1">
+                <div className="text-center sm:text-left">
+                  <h2 className="text-2xl font-bold text-[#0A0A0A] mb-1 break-words">
                     {profileData.name}
                   </h2>
-                  <p className="text-[#4A4A4A] text-sm mb-2">
+                  <p className="text-[#4A4A4A] text-sm mb-2 break-all">
                     {profileData.email}
                   </p>
-                  <div className="flex items-center space-x-4 text-sm text-[#4A4A4A]">
-                    <span>🌟 Miembro verificado</span>
-                    <span>📅 Miembro desde enero 2024</span>
+                  <div className="flex flex-wrap justify-center sm:justify-start items-center space-x-4 text-sm text-[#4A4A4A]">
+                    <span>Miembro verificado</span>
+                    <span>Miembro desde enero 2024</span>
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center space-x-3">
+              <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 md:gap-3 mt-4 md:mt-0">
                 {!isEditing ? (
                   <>
                     <button
@@ -474,8 +385,6 @@ const ProfilePage = () => {
                   >
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                    <option value="Prefiero no decir">Prefiero no decir</option>
                   </select>
                 ) : (
                   <div className="w-full px-4 py-3 bg-gray-50 rounded-xl text-[#0A0A0A] font-medium">
