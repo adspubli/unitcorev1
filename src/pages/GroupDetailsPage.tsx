@@ -1,5 +1,5 @@
 import MobileNavbarProfile from '../components/MobileNavbarProfile';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
