@@ -1,9 +1,36 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    return () => {
+      mounted = false;
+      listener?.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isLogged) {
+      navigate('/dashboard');
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <nav className="relative bg-[#F7F9F8] border-b border-gray-100">
@@ -11,9 +38,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
+            <a
+              href={isLogged ? "/dashboard" : "/"}
+              onClick={handleLogoClick}
+              className="text-2xl font-bold text-[#0A0A0A] tracking-tight cursor-pointer"
+            >
               Unitcore
-            </Link>
+            </a>
           </div>
 
           {/* Desktop Navigation */}

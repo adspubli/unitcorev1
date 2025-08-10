@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 import { 
   Menu, 
   X, 
@@ -22,6 +23,21 @@ interface MobileNavbarProps {
 
 const MobileNavbar: React.FC<MobileNavbarProps> = ({ profileData, onCreateGroup }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    return () => {
+      mounted = false;
+      listener?.subscription.unsubscribe();
+    };
+  }, []);
 
   const navigationItems = [
     {
@@ -69,9 +85,17 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ profileData, onCreateGroup 
         <div className="px-4 sm:px-6">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="text-xl font-bold text-[#0A0A0A] tracking-tight">
+            <a
+              href={isLogged ? "/dashboard" : "/"}
+              className="text-xl font-bold text-[#0A0A0A] tracking-tight cursor-pointer"
+              onClick={e => {
+                e.preventDefault();
+                if (isLogged) navigate('/dashboard');
+                else navigate('/');
+              }}
+            >
               Unitcore
-            </Link>
+            </a>
 
             {/* Desktop Navigation - Hidden on mobile */}
             <div className="hidden md:flex items-center space-x-6">

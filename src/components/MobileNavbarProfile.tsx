@@ -1,19 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import { Home, Search, MessageCircle, User, Plus } from 'lucide-react';
 import ShareActionModal from './ShareActionModal';
 
 
 const MobileNavbarProfile: React.FC = () => {
   const [showActionModal, setShowActionModal] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (mounted) setIsLogged(!!session);
+    });
+    return () => {
+      mounted = false;
+      listener?.subscription.unsubscribe();
+    };
+  }, []);
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isLogged) navigate('/dashboard');
+    else navigate('/');
+  };
   return (
     <>
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#E5E7EB] z-50">
         <div className="grid grid-cols-5 h-20">
-          <Link to="/dashboard" className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200">
+          <a
+            href={isLogged ? "/dashboard" : "/"}
+            onClick={handleHomeClick}
+            className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200 cursor-pointer"
+          >
             <Home className="w-7 h-7" />
             <span className="text-xs mt-1">Inicio</span>
-          </Link>
+          </a>
           <Link to="/explore" className="flex flex-col items-center justify-center text-[#9CA3AF] hover:text-[#059669] transition-colors duration-200">
             <Search className="w-7 h-7" />
             <span className="text-xs mt-1">Buscar</span>

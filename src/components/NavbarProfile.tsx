@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Search, MessageCircle, Bell } from 'lucide-react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, MessageCircle, Bell } from 'lucide-react';
 import MobileNavbarProfile from './MobileNavbarProfile';
 
 interface NavbarProfileProps {
@@ -9,7 +9,11 @@ interface NavbarProfileProps {
 
 
 const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
-  const [showActionModal, setShowActionModal] = useState(false);
+  const navigate = useNavigate();
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/dashboard');
+  };
   return (
     <>
       {/* Top Navigation - Figma Design */}
@@ -18,9 +22,13 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
           <div className="flex justify-between items-center h-16">
             {/* Left Side - Logo */}
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
+              <a
+                href="#"
+                onClick={handleLogoClick}
+                className="text-2xl font-bold text-[#0A0A0A] tracking-tight cursor-pointer"
+              >
                 Splitit
-              </Link>
+              </a>
             </div>
 
             {/* Center - Search Bar */}
@@ -41,8 +49,14 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
             <div className="flex items-center space-x-6">
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-4">
-                <Link to="/dashboard" className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
-                  <Home className="w-6 h-6" />
+                <Link to="/dashboard" className="p-2 group text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
+                  <svg viewBox="0 0 84 89.6" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <g fill="currentColor">
+                      <path d="M23.6,48.7h-9.7c-7.6,0-13.9,6.2-13.9,13.9v9.7c0,7.6,6.2,13.9,13.9,13.9h9.7c7.6,0,13.9-6.2,13.9-13.9v-9.7C37.5,54.9,31.3,48.7,23.6,48.7z M32.7,72.2c0,5-4.1,9.1-9.1,9.1h-9.7c-5,0-9.1-4.1-9.1-9.1v-9.7c0-5,4.1-9.1,9.1-9.1h9.7c5,0,9.1,4.1,9.1,9.1V72.2z"/>
+                      <g><path d="M23.6,3.3h-9.7C6.3,3.3,0.1,9.5,0.1,17.1v9.7c0,7.6,6.2,13.9,13.9,13.9h9.7c7.6,0,13.9-6.2,13.9-13.9v-9.7C37.5,9.5,31.3,3.3,23.6,3.3z M32.7,26.8c0,5-4.1,9.1-9.1,9.1h-9.7c-5,0-9.1-4.1-9.1-9.1v-9.7c0-5,4.1-9.1,9.1-9.1h9.7c5,0,9.1,4.1,9.1,9.1V26.8z"/></g>
+                      <g><path d="M70.2,48.7h-9.7c-7.6,0-13.9,6.2-13.9,13.9v9.7c0,7.6,6.2,13.9,13.9,13.9h9.7c7.6,0,13.9-6.2,13.9-13.9v-9.7C84,55,77.8,48.7,70.2,48.7z M79.2,72.3c0,5-4.1,9.1-9.1,9.1h-9.7c-5,0-9.1-4.1-9.1-9.1v-9.7c0-5,4.1-9.1,9.1-9.1h9.7c5,0,9.1,4.1,9.1,9.1V72.3z"/><g><path d="M70.2,3.3h-9.7c-7.6,0-13.9,6.2-13.9,13.9v9.7c0,7.6,6.2,13.9,13.9,13.9h9.7c7.6,0,13.9-6.2,13.9-13.9v-9.7C84,9.6,77.8,3.3,70.2,3.3z M79.2,26.9c0,5-4.1,9.1-9.1,9.1h-9.7c-5,0-9.1-4.1-9.1-9.1v-9.7c0-5,4.1-9.1,9.1-9.1h9.7c5,0,9.1,4.1,9.1,9.1V26.9z"/></g></g>
+                    </g>
+                  </svg>
                   <span className="sr-only">Inicio</span>
                 </Link>
                 <Link to="/explore" className="p-2 text-[#4A4A4A] hover:text-[#059669] transition-colors duration-200 rounded-lg">
@@ -63,7 +77,7 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
               {/* Botón Compartir */}
               <button
                 className="hidden md:flex items-center px-5 py-2 rounded-full font-semibold bg-[#FB3C67] text-white hover:bg-[#e02d5c] transition-colors duration-200 shadow"
-                onClick={() => setShowActionModal(true)}
+                onClick={() => navigate('/create-group')}
                 style={{
                   fontSize: '1rem',
                   whiteSpace: 'nowrap',
@@ -88,51 +102,7 @@ const NavbarProfile: React.FC<NavbarProfileProps> = ({ avatarUrl }) => {
           </div>
         </div>
 
-        {/* Modal Compartir */}
-        {showActionModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full relative mx-4">
-              <button
-                onClick={() => setShowActionModal(false)}
-                className="absolute top-3 right-3 md:top-4 md:right-4 p-2 text-[#9CA3AF] hover:text-[#4A4A4A] transition-colors duration-200 rounded-lg"
-              >
-                <span style={{fontSize: 20, fontWeight: 'bold'}}>×</span>
-              </button>
-              <div className="text-center mb-8">
-                <h2 className="text-xl md:text-2xl font-bold text-[#0A0A0A] mb-4">¿Qué quieres hacer?</h2>
-              </div>
-              <div className="space-y-4">
-                <Link
-                  to="/create-group"
-                  onClick={() => setShowActionModal(false)}
-                  className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
-                >
-                  <div className="text-center">
-                    <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Compartir</h3>
-                    <p className="text-xs md:text-sm text-[#4A4A4A]">
-                      Soy el/la propietario(a) de una suscripción y quiero compartirla.
-                    </p>
-                  </div>
-                </Link>
-                <Link
-                  to="/explore"
-                  onClick={() => setShowActionModal(false)}
-                  className="block w-full p-4 border-2 border-[#E5E7EB] rounded-xl hover:border-[#059669] transition-colors duration-200 group"
-                >
-                  <div className="text-center">
-                    <h3 className="font-semibold text-[#0A0A0A] mb-2 group-hover:text-[#059669] text-base md:text-lg">Suscribir</h3>
-                    <p className="text-xs md:text-sm text-[#4A4A4A]">
-                      Quiero suscribirme a una suscripción.
-                    </p>
-                  </div>
-                </Link>
-              </div>
-              <div className="mt-6 text-center">
-                <p className="text-xs md:text-sm text-[#FF6B9D] font-medium">¡Fácil!</p>
-              </div>
-            </div>
-          </div>
-        )}
+  {/* Modal Compartir eliminado, el botón ahora navega directo a /create-group */}
 
         {/* Mobile Bottom Navigation */}
         <MobileNavbarProfile />
