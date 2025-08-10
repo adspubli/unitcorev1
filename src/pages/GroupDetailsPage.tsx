@@ -149,44 +149,9 @@ const AppNavigation = ({ profileData }: { profileData: ProfileData }) => {
   );
 };
 
-// Componente de navegación inferior (visible solo en móvil)
-const BottomNavigationBar = ({ profileData }: { profileData: ProfileData }) => {
-  return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg md:hidden z-50">
-      <div className="flex justify-around items-center h-16">
-        <Link to="/dashboard" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
-          <Grid3X3 className="w-6 h-6" />
-          <span>Inicio</span>
-        </Link>
-        <Link to="/explore" className="flex flex-col items-center text-[#00CDD0] transition-colors duration-200 text-xs">
-          <Search className="w-6 h-6" />
-          <span>Explorar</span>
-        </Link>
-        {/* Botón central "Compartir" con estilo de la captura de pantalla */}
-        <Link to="/create-group" className="flex flex-col items-center text-white text-xs -mt-6"> {/* -mt-6 para elevarlo un poco */}
-          <div className="w-14 h-14 bg-[#FB3C67] rounded-full flex items-center justify-center shadow-lg border-4 border-white"> {/* Color rojo de la captura */}
-            <Plus className="w-8 h-8 text-white" />
-          </div>
-          <span className="mt-1 text-gray-600">Compartir</span> {/* Texto debajo del botón */}
-        </Link>
-        <button className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
-          <MessageCircle className="w-6 h-6" />
-          <span>Mensajes</span>
-        </button>
-        <Link to="/profile" className="flex flex-col items-center text-gray-600 hover:text-[#00CDD0] transition-colors duration-200 text-xs">
-          <img
-            src={profileData.avatar}
-            alt="Profile"
-            className="w-6 h-6 rounded-full object-cover"
-          />
-          <span>Perfil</span>
-        </Link>
-      </div>
-    </div>
-  );
-};
 
 
+// (Eliminado BottomNavigationBar, no se usa)
 // Componente principal GroupDetailsPage
 const GroupDetailsPage = () => {
   const { id } = useParams();
@@ -212,42 +177,13 @@ const GroupDetailsPage = () => {
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
       rating: 4.8
     },
+
     members: [
       {
         id: 1,
         name: 'Jon Ander',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
         isOwner: true
-      },
-      {
-        id: 2,
-        name: 'Marfil',
-        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b5ac?w=100&h=100&fit=crop&crop=face',
-        isOwner: false
-      },
-      {
-        id: 3,
-        name: 'Ilyas',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-        isOwner: false
-      },
-      {
-        id: 4,
-        name: 'MEDO',
-        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-        isOwner: false
-      },
-      {
-        id: 5,
-        name: 'Edwin',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face',
-        isOwner: false
-      },
-      {
-        id: 6,
-        name: 'Jesús',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-        isOwner: false
       }
     ]
   };
@@ -470,7 +406,6 @@ const GroupDetailsPage = () => {
         </div>
       )}
       {/* Barra de navegación inferior para móviles */}
-      <BottomNavigationBar profileData={profileData} />
     </div>
   );
 };
