@@ -31,6 +31,7 @@ export type Database = {
           logo_url: string;
           color: string;
           created_at: string;
+          slug?: string; // opcional si existe en BD
         };
         Insert: {
           id?: string;
@@ -39,6 +40,7 @@ export type Database = {
           logo_url: string;
           color: string;
           created_at?: string;
+          slug?: string;
         };
         Update: {
           id?: string;
@@ -47,6 +49,7 @@ export type Database = {
           logo_url?: string;
           color?: string;
           created_at?: string;
+          slug?: string;
         };
       };
       subscription_groups: {
@@ -56,14 +59,19 @@ export type Database = {
           owner_id: string;
           title: string;
           description: string;
-          total_slots: number;
-          price_per_slot: number;
+          total_slots?: number; // legacy
+          total_spots?: number; // usado en UI
+          available_spots?: number; // plazas libres
+          price_per_slot?: number; // legacy
+          price_per_user?: number; // usado en UI
+          price?: number; // fallback general
           start_date: string;
-          end_date: string;
-          status: 'active' | 'full' | 'inactive';
-          instant_acceptance: boolean;
-          verified_receipt: boolean;
+          end_date: string | null;
+          status: 'active' | 'full' | 'inactive' | string;
+          instant_acceptance?: boolean;
+          verified_receipt?: boolean;
           created_at: string;
+          updated_at?: string;
         };
         Insert: {
           id?: string;
@@ -71,14 +79,19 @@ export type Database = {
           owner_id: string;
           title: string;
           description: string;
-          total_slots: number;
-          price_per_slot: number;
+          total_slots?: number;
+          total_spots?: number;
+          available_spots?: number;
+          price_per_slot?: number;
+          price_per_user?: number;
+          price?: number;
           start_date: string;
-          end_date: string;
-          status?: 'active' | 'full' | 'inactive';
+          end_date?: string | null;
+          status?: 'active' | 'full' | 'inactive' | string;
           instant_acceptance?: boolean;
           verified_receipt?: boolean;
           created_at?: string;
+          updated_at?: string;
         };
         Update: {
           id?: string;
@@ -87,13 +100,18 @@ export type Database = {
           title?: string;
           description?: string;
           total_slots?: number;
+          total_spots?: number;
+          available_spots?: number;
           price_per_slot?: number;
+          price_per_user?: number;
+          price?: number;
           start_date?: string;
-          end_date?: string;
-          status?: 'active' | 'full' | 'inactive';
+          end_date?: string | null;
+          status?: 'active' | 'full' | 'inactive' | string;
           instant_acceptance?: boolean;
           verified_receipt?: boolean;
           created_at?: string;
+          updated_at?: string;
         };
       };
       group_memberships: {

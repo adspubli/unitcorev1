@@ -89,6 +89,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/create-group" element={<CreateGroupPage />} />
+          <Route path="/group/:slug/:id" element={<GroupDetailsPage />} />
           <Route path="/group/:id" element={<GroupDetailsPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
           <Route path="/select-plan/:slug" element={<SelectPlanPage />} />

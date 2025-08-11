@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWizardStore } from "../store/wizard";
+import { supabase } from "../lib/supabase";
 
 const CONEXION_FEE = 0.88;
 
@@ -31,7 +33,54 @@ export default function OfferSummaryPage() {
     }, 800);
   };
 
-  // No loading/error states, ya que todo viene del store
+  // Confirmar y activar la suscripción
+  const [publishing, setPublishing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handlePublish = async () => {
+    setPublishing(true);
+    setError(null);
+    try {
+      // Obtener usuario actual
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        setError('No se pudo obtener el usuario actual.');
+        setPublishing(false);
+        return;
+      }
+      // Crear la suscripción en la base de datos
+      const today = new Date().toISOString().slice(0, 10);
+      const now = new Date().toISOString();
+  const { error: insertError } = await supabase
+        .from('subscription_groups')
+        .insert([
+          {
+            service_id: service.id,
+            owner_id: user.id,
+            title: plan.name,
+            description: plan.name,
+            total_spots: slots,
+            available_spots: Math.max(slots - 1, 0), // El creador ocupa una plaza
+            price_per_user: plan.price / plan.max_users,
+            start_date: today,
+            end_date: null,
+            status: 'active',
+            created_at: now,
+            updated_at: now,
+          }
+        ])
+        .select();
+      if (insertError) {
+        setError('Error al crear la suscripción.');
+        setPublishing(false);
+        return;
+      }
+      navigate('/dashboard');
+    } catch (e) {
+      setError('Error inesperado.');
+    }
+    setPublishing(false);
+  };
 
   return (
     <div className="min-h-screen bg-[#fff] flex flex-col">
@@ -93,11 +142,13 @@ export default function OfferSummaryPage() {
             Reconozco y acepto que <b>Spliiit</b> y <b>{service.name}</b> no están en ningún caso vinculados por los servicios prestados en la plataforma. A este respecto, confirmo que he leído los <b>Términos y Condiciones de {service.name}</b> y me comprometo a respetarlos, siendo yo el único responsable.
           </label>
         </div>
+        {error && <div className="text-red-500 mb-4">{error}</div>}
         <button
           className="px-12 py-3 rounded-full text-white text-lg font-bold bg-cyan-200 disabled:opacity-60 disabled:cursor-not-allowed"
-          disabled={!phoneValid || !termsAccepted}
+          disabled={publishing}
+          onClick={handlePublish}
         >
-          Publicar
+          {publishing ? 'Publicando...' : 'Publicar'}
         </button>
       </main>
     </div>
