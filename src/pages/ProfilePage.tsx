@@ -100,7 +100,7 @@ const ProfilePage = () => {
               first_name: editableData.firstName,
               last_name: editableData.lastName,
               nickname: editableData.nickname,
-              birth_date: editableData.birthDate,
+              birth_date: editableData.birthDate ? editableData.birthDate : null,
               gender: editableData.gender
             }, { onConflict: 'user_id' });
           if (dbError) {
