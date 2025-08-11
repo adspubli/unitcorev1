@@ -47,7 +47,7 @@ const ProfilePage = () => {
         if (user) {
           setUser(user);
           // Leer datos extendidos desde profiles
-          const { data: profile, error: profileError } = await supabase
+          const { data: profile } = await supabase
             .from('profiles')
             .select('first_name, last_name, nickname, birth_date, gender, phone')
             .eq('user_id', user.id)

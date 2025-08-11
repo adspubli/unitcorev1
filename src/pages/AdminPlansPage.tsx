@@ -6,25 +6,21 @@ export default function AdminPlansPage() {
   const [services, setServices] = useState<any[]>([]);
   const [selectedService, setSelectedService] = useState<any | null>(null);
   const [plans, setPlans] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newPlan, setNewPlan] = useState({ name: '', price: '', description: '', max_users: '' });
   const [creating, setCreating] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   async function loadServices() {
-    setLoading(true);
     const data = await fetchServices();
     setServices(data);
-    setLoading(false);
   }
 
   async function loadPlans(service: any) {
     setSelectedService(service);
-    setLoading(true);
     const data = await fetchPlansByService(service.id);
     setPlans(data);
-    setLoading(false);
   }
 
   return (
