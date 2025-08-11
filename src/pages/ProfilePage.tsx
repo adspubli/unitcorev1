@@ -82,35 +82,25 @@ const ProfilePage = () => {
     setSuccessMessage(null);
 
     try {
-      // Actualizar solo el teléfono principal en Auth
-      const { data, error } = await supabase.auth.updateUser({
-        phone: editableData.phone
-      });
-
-      if (error) {
-        setError(error.message);
-      } else {
-        // Guardar todos los datos extendidos solo en la tabla profiles
-        if (data.user) {
-          const { error: dbError } = await supabase
-            .from('profiles')
-            .upsert({
-              user_id: data.user.id,
-              phone: editableData.phone,
-              first_name: editableData.firstName,
-              last_name: editableData.lastName,
-              nickname: editableData.nickname,
-              birth_date: editableData.birthDate ? editableData.birthDate : null,
-              gender: editableData.gender
-            }, { onConflict: 'user_id' });
-          if (dbError) {
-            setError('Perfil actualizado en Auth, pero error en base de datos: ' + dbError.message);
-            return;
-          }
+      // Guardar todos los datos extendidos solo en la tabla profiles
+      if (user) {
+        const { error: dbError } = await supabase
+          .from('profiles')
+          .upsert({
+            user_id: user.id,
+            phone: editableData.phone ? editableData.phone : null,
+            first_name: editableData.firstName,
+            last_name: editableData.lastName,
+            nickname: editableData.nickname,
+            birth_date: editableData.birthDate ? editableData.birthDate : null,
+            gender: editableData.gender
+          }, { onConflict: 'user_id' });
+        if (dbError) {
+          setError('Error en base de datos: ' + dbError.message);
+          return;
         }
         setSuccessMessage('¡Perfil actualizado exitosamente!');
         setIsEditing(false);
-        setUser(data.user);
         setTimeout(() => setSuccessMessage(null), 3000);
       }
     } catch (err: any) {
