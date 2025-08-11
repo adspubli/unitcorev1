@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 import SelectPlanPage from './pages/SelectPlanPage';
+import ShareSlotsPage from './pages/ShareSlotsPage';
+import OfferSummaryPage from './pages/OfferSummaryPage';
+import AdminPlansPage from './pages/AdminPlansPage';
 
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
@@ -88,7 +91,11 @@ function App() {
           <Route path="/create-group" element={<CreateGroupPage />} />
           <Route path="/group/:id" element={<GroupDetailsPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
-          <Route path="/select-plan/:serviceId" element={<SelectPlanPage />} />
+          <Route path="/select-plan/:slug" element={<SelectPlanPage />} />
+          <Route path="/select-plan" element={<LandingPage />} />
+          <Route path="/admin-plans" element={<AdminPlansPage />} />
+          <Route path="/share-slots" element={<ShareSlotsPage />} />
+          <Route path="/offer-summary" element={<OfferSummaryPage />} />
         </Routes>
       </div>
     </Router>

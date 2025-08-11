@@ -28,8 +28,8 @@ const ProfilePage = () => {
   });
 
   const profileData = {
-    name: user?.user_metadata?.first_name && user?.user_metadata?.last_name 
-      ? `${user.user_metadata.first_name} ${user.user_metadata.last_name}`
+    name: editableData.firstName && editableData.lastName
+      ? `${editableData.firstName} ${editableData.lastName}`
       : user?.email?.split('@')[0] || 'Usuario',
     email: user?.email || '',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
@@ -46,14 +46,19 @@ const ProfilePage = () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           setUser(user);
-          // Inicializar datos editables con los datos existentes
+          // Leer datos extendidos desde profiles
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('first_name, last_name, nickname, birth_date, gender, phone')
+            .eq('user_id', user.id)
+            .single();
           setEditableData({
-            firstName: user.user_metadata?.first_name || '',
-            lastName: user.user_metadata?.last_name || '',
-            nickname: user.user_metadata?.nickname || '',
-            birthDate: user.user_metadata?.birth_date || '',
-            gender: user.user_metadata?.gender || 'Masculino',
-            phone: user.user_metadata?.phone || ''
+            firstName: profile?.first_name || '',
+            lastName: profile?.last_name || '',
+            nickname: profile?.nickname || '',
+            birthDate: profile?.birth_date || '',
+            gender: profile?.gender || 'Masculino',
+            phone: user.phone || ''
           });
         }
       } catch (err) {
@@ -77,32 +82,29 @@ const ProfilePage = () => {
     setSuccessMessage(null);
 
     try {
-      // Actualizar metadatos de usuario en Auth
+      // Actualizar solo el teléfono principal en Auth
       const { data, error } = await supabase.auth.updateUser({
-        data: {
-          first_name: editableData.firstName,
-          last_name: editableData.lastName,
-          nickname: editableData.nickname,
-          birth_date: editableData.birthDate,
-          gender: editableData.gender,
-          phone: editableData.phone
-        }
+        phone: editableData.phone
       });
 
       if (error) {
         setError(error.message);
       } else {
-        // También guardar el teléfono en la tabla profiles
+        // Guardar todos los datos extendidos solo en la tabla profiles
         if (data.user) {
           const { error: dbError } = await supabase
             .from('profiles')
             .upsert({
               user_id: data.user.id,
               phone: editableData.phone,
-              last_name: editableData.lastName
+              first_name: editableData.firstName,
+              last_name: editableData.lastName,
+              nickname: editableData.nickname,
+              birth_date: editableData.birthDate,
+              gender: editableData.gender
             }, { onConflict: 'user_id' });
           if (dbError) {
-            setError('Perfil en Auth actualizado, pero error en base de datos: ' + dbError.message);
+            setError('Perfil actualizado en Auth, pero error en base de datos: ' + dbError.message);
             return;
           }
         }
@@ -118,16 +120,21 @@ const ProfilePage = () => {
     }
   };
 
-  const handleCancelEdit = () => {
-    // Restaurar datos originales
+  const handleCancelEdit = async () => {
+    // Restaurar datos originales desde profiles y auth
     if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('first_name, last_name, nickname, birth_date, gender, phone')
+        .eq('user_id', user.id)
+        .single();
       setEditableData({
-        firstName: user.user_metadata?.first_name || '',
-        lastName: user.user_metadata?.last_name || '',
-        nickname: user.user_metadata?.nickname || '',
-        birthDate: user.user_metadata?.birth_date || '',
-        gender: user.user_metadata?.gender || 'Masculino',
-        phone: user.user_metadata?.phone || ''
+        firstName: profile?.first_name || '',
+        lastName: profile?.last_name || '',
+        nickname: profile?.nickname || '',
+        birthDate: profile?.birth_date || '',
+        gender: profile?.gender || 'Masculino',
+        phone: user.phone || ''
       });
     }
     setIsEditing(false);
