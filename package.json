@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mcp:supabase": "SUPABASE_ACCESS_TOKEN=sbp_41fc2f3e7b603a4dfa2a11b9eab363f71d5ca221 npx -y @supabase/mcp-server-supabase@latest --read-only --project-ref=opffwcchsjmjzewvinsv"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
